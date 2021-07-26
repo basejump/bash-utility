@@ -3,7 +3,8 @@
 # @file Array
 # @brief Functions for array operations and manipulations.
 
-# @description Check if item exists in the given array.
+##
+# Check if item exists in the given array.
 #
 # @example
 #   array=("a" "b" "c")
@@ -11,12 +12,13 @@
 #   #Output
 #   0
 #
-# @arg $1 mixed Item to search (needle).
-# @arg $2 array array to be searched (haystack).
+# $1 - mixed Item to search (needle).
+# $2 - array array to be searched (haystack).
 #
-# @exitcode 0  If successful.
-# @exitcode 1 If no match found in the array.
-# @exitcode 2 Function missing arguments.
+# @exitcode 0 - If successful.
+# @exitcode 1 - If no match found in the array.
+# @exitcode 2 - Function missing arguments.
+#
 array::contains() {
     [[ $# -lt 2 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     declare query="${1:-}"

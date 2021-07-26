@@ -14,7 +14,8 @@
 #
 # @arg $1 string input email address to validate.
 #
-# @exitcode 0  If provided input is an email address.
+# @exitcodes
+# 0  If provided input is an email address.
 # @exitcode 1  If provided input is not an email address.
 # @exitcode 2 Function missing arguments.
 validation::email() {

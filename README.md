@@ -1,3 +1,8 @@
+## forked for how we do docs. preppeing for alias pick ups
+`rm test.md; touch test.md; ./bin/generate_readme.sh -f test.md`
+on mac had to make some changes,  'brew install coreutils' to get the realpath and some tweaks to make it `sed -i.x`
+Still a WIP
+
 <h1 align="center">Bash Utility</h1>
 
 <p align="center">

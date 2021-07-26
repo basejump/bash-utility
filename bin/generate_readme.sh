@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
+set -eo pipefail # strict mode https://bit.ly/36MvF0T
+# set -o xtrace
 
 #https://github.com/bkrem/make-toc.sh/blob/master/make-toc.sh
 #https://gitlab.com/pedrolab/doctoc.sh/-/blob/master/doctoc.sh
+
 _usage() {
     printf "
 Script to autogenerate markdown based on bash source code.\n
@@ -135,9 +138,9 @@ _setup_arguments() {
 }
 
 _setup_tempfile() {
-    declare temp_file
+    declare temp_file="foo"
     type -p mktemp &> /dev/null && { temp_file="$(mktemp -u)" || temp_file="${PWD}/$((RANDOM * 2)).LOG"; }
-    trap 'rm -f "${temp_file}"' EXIT
+    trap 'rm -f "${temp_file:-}"' EXIT
     printf "%s" "${temp_file}"
 }
 
@@ -159,12 +162,12 @@ _insert_shdoc_to_file() {
     info_shdoc="<!-- DO NOT EDIT THIS SECTION, INSTEAD RE-RUN ${SCRIPT_FILE} TO UPDATE -->"
     end_shdoc="<!-- END ${SCRIPT_FILE} generated SHDOC please keep comment here to allow auto update -->"
 
-    sed -i "1s/^/${info_shdoc}\n/" "${shdoc_tmp_file}"
+    sed -i.x "1s/^/${info_shdoc}/" "${shdoc_tmp_file}"
 
     if grep --color=always -Pzl "(?s)${start_shdoc}.*\n.*${end_shdoc}" "${source_markdown}" &> /dev/null; then
         # src https://stackoverflow.com/questions/2699666/replace-delimited-block-of-text-in-file-with-the-contents-of-another-file
 
-        sed -i -ne "/${start_shdoc}/ {p; r ${shdoc_tmp_file}" -e ":a; n; /${end_shdoc}/ {p; b}; ba}; p" "${source_markdown}"
+        sed -i.x -ne "/${start_shdoc}/ {p; r ${shdoc_tmp_file}" -e ":a; n; /${end_shdoc}/ {p; b}; ba}; p" "${source_markdown}"
         echo -e "Updated bashdoc content to ${source_markdown} successfully\n"
 
     else
@@ -248,18 +251,18 @@ _insert_toc_to_file() {
     # grep color for debugging -> https://superuser.com/questions/914856/grep-display-all-output-but-highlight-search-matches
     if grep --color=always -Pzl "(?s)${start_toc}.*\n.*${end_toc}" "${source_markdown}" &> /dev/null; then
         # src https://askubuntu.com/questions/533221/how-do-i-replace-multiple-lines-with-single-word-in-fileinplace-replace
-        sed -i ":a;N;\$!ba;s/$start_toc.*$end_toc/$toc_block/g" "${source_markdown}"
+        sed -i.x ":a;N;\$!ba;s/$start_toc.*$end_toc/$toc_block/g" "${source_markdown}"
         echo -e "Updated TOC content in ${source_markdown} succesfully\n"
 
-    else
-        sed -i 1i"$toc_block" "${source_markdown}"
-        echo -e "Created TOC in ${source_markdown} succesfully\n"
+    # else
+        # sed -i.x 1i"$toc_block" "${source_markdown}"
+        # echo -e "Created TOC in ${source_markdown} succesfully\n"
 
     fi
 
     # undo symbol replacements
-    sed -i "s,${utext_ampersand},\&,g" "${source_markdown}"
-    sed -i "s,${utext_slash},\/,g" "${source_markdown}"
+    sed -i.x "s,${utext_ampersand},\&,g" "${source_markdown}"
+    sed -i.x "s,${utext_slash},\/,g" "${source_markdown}"
 
 }
 
@@ -325,28 +328,28 @@ EOF
         fi
 
         if grep --color=always -Pzl "(?s)${start_shdoc}.*\n.*${end_shdoc}" "${dest_file_path}" &> /dev/null; then
-            sed -i -ne "/${start_shdoc}/ {p; r ${shdoc_tmp_file}" -e ":a; n; /${end_shdoc}/ {p; b}; ba}; p" "${dest_file_path}"
+            sed -i.x -ne "/${start_shdoc}/ {p; r ${shdoc_tmp_file}" -e ":a; n; /${end_shdoc}/ {p; b}; ba}; p" "${dest_file_path}"
         fi
 
         # Extract title and description from webdoc
         title="$(sed -ne 's/-->//; s/^.*<!-- file=//p' "${dest_file_path}")"
         description="$(sed -ne 's/-->//; s/^.*<!-- brief=//p' "${dest_file_path}")"
-        sed -i '/^.*<!-- file=/d' "${dest_file_path}"
-        sed -i '/^.*<!-- brief=/d' "${dest_file_path}"
+        sed -i.x '/^.*<!-- file=/d' "${dest_file_path}"
+        sed -i.x '/^.*<!-- brief=/d' "${dest_file_path}"
 
         # Replace Frontmatter content with values from the document
         if [[ "${is_new_file}" = true ]]; then
 
-            sed -i -e "s/<!-- file -->/${title}/g" "${dest_file_path}"
-            sed -i -e "s/<!-- brief -->/${description}/g" "${dest_file_path}"
+            sed -i.x -e "s/<!-- file -->/${title}/g" "${dest_file_path}"
+            sed -i.x -e "s/<!-- brief -->/${description}/g" "${dest_file_path}"
         else
-            sed -i -e "s/title : .*/title : ${title}/g" "${dest_file_path}"
-            sed -i -e "s/description : .*/description : ${description}/g" "${dest_file_path}"
+            sed -i.x -e "s/title : .*/title : ${title}/g" "${dest_file_path}"
+            sed -i.x -e "s/description : .*/description : ${description}/g" "${dest_file_path}"
 
         fi
 
         # Update the last modified timestamp in front matter
-        sed -i -e "s/lastmod : .*/lastmod : ${file_modified_date}/g" "${dest_file_path}"
+        sed -i.x -e "s/lastmod : .*/lastmod : ${file_modified_date}/g" "${dest_file_path}"
 
         echo -e "Updated bashdoc content to ${dest_file_path} successfully."
         rm "${shdoc_tmp_file}"

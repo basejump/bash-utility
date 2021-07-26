@@ -35,14 +35,16 @@ BEGIN {
 
     styles["/code", "to"] = "```"
 
-    styles["argN", "from"] = "^(\\$[0-9]) (\\S+)"
-    styles["argN", "to"] = "**\\1** (\\2):"
+    styles["argN", "from"] = "^(\\$[0-9])[ -]*\\(?+(\\w+)\\)?+"
+    styles["argN", "to"] = "**\\1** | (\\2):"
+    # styles["argN", "to"] = "**\\1** | (\\2) | "
 
     styles["arg@", "from"] = "^\\$@ (\\S+)"
     styles["arg@", "to"] = "**...** (\\1):"
 
     styles["li", "from"] = ".*"
     styles["li", "to"] = "- &"
+    # styles["li", "to"] = "&"
 
     styles["i", "from"] = ".*"
     styles["i", "to"] = "*&*"
@@ -50,8 +52,11 @@ BEGIN {
     styles["anchor", "from"] = ".*"
     styles["anchor", "to"] = "[&](#&)"
 
-    styles["exitcode", "from"] = "([>!]?[0-9]{1,3}) (.*)"
-    styles["exitcode", "to"] = "**\\1**: \\2"
+    styles["exitcode", "from"] = "([>!]?[1-9]{1,3}) (.*)"
+    styles["exitcode", "to"] = "**\\1** 💥 \\2"
+
+    styles["exitcode0", "from"] = "([>!]?[0]{1}) (.*)"
+    styles["exitcode0", "to"] = "**0** 👍  \\2"
 
     styles["h_rule", "to"] = "---"
 
@@ -102,7 +107,7 @@ function generate_anchor(text) {
 
 function reset() {
     has_example = 0
-    has_args = 0
+    has_args_heading = 0
     has_exitcode = 0
     has_stdout = 0
 
@@ -121,7 +126,7 @@ function reset() {
 /^[[:space:]]*# @file/ {
     sub(/^[[:space:]]*# @file /, "")
 
-    filedoc = render("h1", $0) "\n"
+    filedoc = "\n" render("h1", $0) "\n"
     if(style == "webdoc"){
         filedoc = filedoc render("comment", "file=" $0) "\n"
     }
@@ -145,6 +150,26 @@ function reset() {
     docblock = ""
 }
 
+# desc start with #---
+/^[[:space:]]*#\s*-{3}/ {
+    in_description = 1
+    in_example = 0
+
+    reset()
+
+    docblock = ""
+}
+
+# desc start with ##
+/^[[:space:]]*#\s?#/ {
+    in_description = 1
+    in_example = 0
+
+    reset()
+
+    docblock = ""
+}
+
 in_description {
     if (/^[^[[:space:]]*#]|^[[:space:]]*# @[^d]|^[[:space:]]*[^#]/) {
         if (!match(content_desc, /\n$/)) {
@@ -153,7 +178,9 @@ in_description {
         in_description = 0
     } else {
         sub(/^[[:space:]]*# @description /, "")
+        sub(/^\s*#\s*-{3,}[[:space:]]*/, "")
         sub(/^[[:space:]]*# /, "")
+        sub(/^[[:space:]]*#\s?#/, "")
         sub(/^[[:space:]]*#$/, "")
 
         content_desc = content_desc "\n" $0
@@ -167,6 +194,7 @@ in_example {
         in_example = 0
 
         content_example = content_example "\n" render("/code") "\n"
+
     } else {
         sub(/^[[:space:]]*#[ ]{3}/, "")
 
@@ -181,19 +209,46 @@ in_example {
 }
 
 /^[[:space:]]*# @arg/ {
-    if (!has_args) {
-        has_args = 1
+    do_args = 1
+    # if (!has_args_heading) {
+    #     has_args_heading = 1
 
-        content_args = content_args "\n" render("h3", "Arguments") "\n\n"
-    }
+    #     content_args = content_args "\n" render("h3", "🔑 Arguments") "\n\n"
+    #     # content_args = content_args "\n" "$arg     | desc" "\n" ":-------:|------" "\n"
 
-    sub(/^[[:space:]]*# @arg /, "")
+    # }
 
-    $0 = render("argN", $0)
-    $0 = render("arg@", $0)
+    # sub(/^[[:space:]]*# @arg /, "")
 
-    content_args = content_args render("li", $0) "\n"
+    # $0 = render("argN", $0)
+    # $0 = render("arg@", $0)
+
+    # content_args = content_args $0 "\n"
 }
+
+# args in form # $1 -
+/^[[:space:]]*# \$[1-9]/ {
+    do_args = 1
+    # if (!has_args) {
+    #     has_args = 1
+    #     content_args = content_args "\n" render("h3", "🔑 Arguments") "\n\n"
+    # }
+    # sub(/^[[:space:]]*# /, "")
+    # $0 = render("argN", $0)
+    # content_args = content_args render("li", $0) "\n"
+}
+
+do_args {
+    if (!has_args_heading) {
+        has_args_heading = 1
+        content_args = content_args "\n" render("h3", "🔑 Arguments") "\n\n"
+    }
+    sub(/^[[:space:]]*# /, "")
+    $0 = render("argN", $0)
+    content_args = content_args render("li", $0) "\n"
+    do_args = 0
+}
+
 
 /^[[:space:]]*# @noargs/ {
     content_args = content_args "\n" render("i", "Function has no arguments.") "\n"
@@ -203,11 +258,12 @@ in_example {
     if (!has_exitcode) {
         has_exitcode = 1
 
-        content_exitcode = content_exitcode "\n" render("h3", "Exit codes") "\n\n"
+        content_exitcode = content_exitcode "\n" render("h3", "🎯 Exit codes") "\n\n"
     }
 
     sub(/^[[:space:]]*# @exitcode /, "")
 
+    $0 = render("exitcode0", $0)
     $0 = render("exitcode", $0)
 
     content_exitcode = content_exitcode render("li", $0) "\n"
@@ -226,7 +282,7 @@ in_example {
 
     sub(/^[[:space:]]*# @stdout /, "")
 
-    content_stdout = content_stdout "\n" render("h3", "Output on stdout")
+    content_stdout = content_stdout "\n" render("h3", "💻 Stdout output")
     content_stdout = content_stdout "\n\n" render("li", $0) "\n"
 }
 
