@@ -8,7 +8,7 @@
 #
 # example:
 #   array=("a" "b" "c")
-#   array::contains "c" ${array[@]}
+#   array.contains "c" ${array[@]}
 #   #Output
 #   0
 #
@@ -31,13 +31,18 @@ array::contains() {
 
     return 1
 }
+alias array.contains="array::contains"
+
+array::nodocs() {
+    [[ $# -lt 2 ]]
+}
 
 ###
 # Remove duplicate items from the array.
 #
 # example:
 #   array=("a" "b" "a" "c")
-#   printf "%s" "$(array::dedupe ${array[@]})"
+#   printf "%s" "$(array.dedupe ${array[@]})"
 #   #Output
 #   a
 #   b
@@ -60,13 +65,14 @@ array::dedupe() {
     done
     printf '%s\n' "${arr_unique[@]}"
 }
+alias array.dedupe="array::dedupe"
 
 ###
 # Check if a given array is empty.
 #
 # example:
 #   array=("a" "b" "c" "d")
-#   array::is_empty "${array[@]}"
+#   array.is_empty "${array[@]}"
 #
 # $1 - array Array to be checked.
 #
@@ -81,6 +87,7 @@ array::is_empty() {
         return 1
     fi
 }
+alias array.is_empty="array::is_empty"
 
 ###
 # Join array elements with a string.
@@ -89,10 +96,10 @@ array::is_empty() {
 #
 # example:
 #   array=("a" "b" "c" "d")
-#   printf "%s" "$(array::join "," "${array[@]}")"
+#   printf "%s" "$(array.join "," "${array[@]}")"
 #   #Output
 #   a,b,c,d
-#   printf "%s" "$(array::join "" "${array[@]}")"
+#   printf "%s" "$(array.join "" "${array[@]}")"
 #   #Output
 #   abcd
 #
@@ -112,13 +119,14 @@ array::join() {
     shift
     printf "%s" "${@/#/${delimiter}}"
 }
+alias array.join="array::join"
 
 ###
 # Return an array with elements in reverse order.
 #
 # example:
 #   array=(1 2 3 4 5)
-#   printf "%s" "$(array::reverse "${array[@]}")"
+#   printf "%s" "$(array.reverse "${array[@]}")"
 #   #Output
 #   5 4 3 2 1
 #
@@ -146,13 +154,14 @@ array::reverse() {
     done
     printf '%s\n' "${array[@]}"
 }
+alias array.reverse="array::reverse"
 
 ###
 # Returns a random item from the array.
 #
 # example:
 #   array=("a" "b" "c" "d")
-#   printf "%s\n" "$(array::random_element "${array[@]}")"
+#   printf "%s\n" "$(array.random_element "${array[@]}")"
 #   #Output
 #   c
 #
@@ -168,13 +177,14 @@ array::random_element() {
     local array=("$@")
     printf '%s\n' "${array[RANDOM % $#]}"
 }
+alias array.random_element="array::random_element"
 
 ###
 # Sort an array from lowest to highest.
 #
 # example:
 #   sarr=("a c" "a" "d" 2 1 "4 5")
-#   array::array_sort "${sarr[@]}"
+#   array.array_sort "${sarr[@]}"
 #   #Output
 #   1
 #   2
@@ -202,13 +212,14 @@ array::sort() {
     eval "${noglobtate}"
     printf "%s\n" "${sorted[@]}"
 }
+alias array.sort="array::sort"
 
 ###
 # Sort an array in reverse order (highest to lowest).
 #
 # example:
 #   sarr=("a c" "a" "d" 2 1 "4 5")
-#   array::array_sort "${sarr[@]}"
+#   array.array_sort "${sarr[@]}"
 #   #Output
 #   d
 #   a c
@@ -236,6 +247,7 @@ array::rsort() {
     eval "${noglobtate}"
     printf "%s\n" "${sorted[@]}"
 }
+alias array.rsort="array::rsort"
 
 ###
 # Bubble sort an integer array from lowest to highest.
@@ -243,7 +255,7 @@ array::rsort() {
 #
 # example:
 #   iarr=(4 5 1 3)
-#   array::bsort "${iarr[@]}"
+#   array.bsort "${iarr[@]}"
 #   #Output
 #   1
 #   3
@@ -272,6 +284,7 @@ array::bsort() {
     done
     printf "%s\n" "${arr[@]}"
 }
+alias array.bsort="array::bsort"
 
 ###
 # Merge two arrays.
@@ -280,7 +293,7 @@ array::bsort() {
 # example:
 #   a=("a" "c")
 #   b=("d" "c")
-#   array::merge "a[@]" "b[@]"
+#   array.merge "a[@]" "b[@]"
 #   #Output
 #   a
 #   c
@@ -296,9 +309,11 @@ array::bsort() {
 # stdout: Merged array.
 #
 array::merge() {
+
     [[ $# -ne 2 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     declare -a arr1=("${!1}")
     declare -a arr2=("${!2}")
     declare out=("${arr1[@]}" "${arr2[@]}")
     printf "%s\n" "${out[@]}"
 }
+alias array.merge="array::merge"

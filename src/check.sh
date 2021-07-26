@@ -32,3 +32,4 @@ check::is_sudo() {
         return 1
     fi
 }
+# END

@@ -4,6 +4,7 @@
 # style = readme or doc
 # toc = true or false
 BEGIN {
+    IGNORECASE = 1
     if (! style) {
         style = "doc"
     }
@@ -63,6 +64,9 @@ BEGIN {
     styles["comment", "from"] = ".*"
     styles["comment", "to"] = "<!-- & -->"
 
+    styles["alias", "from"] = "alias (.*)=.*$"
+    styles["alias", "to"] = "\\1"
+
 
     output_format["readme", "h1"] = "h2"
     output_format["readme", "h2"] = "h3"
@@ -111,6 +115,7 @@ function reset() {
     has_exitcode = 0
     has_stdout = 0
 
+    content_function_name = ""
     content_desc = ""
     content_example  = ""
     content_args = ""
@@ -122,9 +127,12 @@ function reset() {
 function description_start() {
     in_description = 1
     in_example = 0
-    reset()
-    docblock = ""
 }
+
+# {
+#     print  "at start:" $0 >> "awk_start"
+#     prev_line=$0
+# }
 
 /^[[:space:]]*# @internal/ {
     is_internal = 1
@@ -158,7 +166,7 @@ function description_start() {
     description_start()
 }
 
-# Description start with ##
+# function docs start with ##
 /^[[:space:]]*#\s?#/ {
     description_start()
 }
@@ -282,11 +290,11 @@ in_exitcodes {
     content_seealso = content_seealso "\n" render("h3", "See also") "\n\n" $0 "\n"
 }
 
-/^[[:space:]]*# [@stdout|stdout:]/ {
+/^[[:space:]]*# @stdout/ || /^[[:space:]]*# stdout:/ {
     has_stdout = 1
 
     sub(/^[[:space:]]*# @stdout /, "")
-    sub(/^[[:space:]]*# stdout: /, "")
+    sub(/^[[:space:]]*# stdout:/, "")
 
     content_stdout = content_stdout "\n" render("h3", "🖨 Stdout output")
     content_stdout = content_stdout "\n\n" render("li", $0) "\n"
@@ -297,31 +305,69 @@ in_exitcodes {
     if(style == "webdoc"){
         docblock = docblock "\n" render("h_rule") "\n"
     }
+    # print  "docblock part : " docblock >> "awk_docblock_section"
 }
 
+# function start
 /^[ \t]*(function([ \t])+)?([a-zA-Z0-9_:-]+)([ \t]*)(\(([ \t]*)\))?[ \t]*\{/ && docblock != "" && !in_example {
-    if (is_internal) {
-        is_internal = 0
-    } else {
-        func_name = gensub(\
-            /^[ \t]*(function([ \t])+)?([a-zA-Z0-9_:-]+)[ \t]*\(.*/, \
-            "\\3()", \
-            "g" \
-        )
-        doc = doc "\n---\n" #hr sep
-        doc = doc "\n" render("h2", func_name) "\n" docblock
-        if (toc) {
-            url = generate_anchor(func_name)
 
-            content_idx = content_idx "\n" "- [" func_name "](#" url ")"
+    content_function_name = gensub(\
+        /^[ \t]*(function([ \t])+)?([a-zA-Z0-9_:-]+)[ \t]*\(.*/, \
+        "\\3()", \
+        "g" \
+    )
+
+    doing_function_chunk = 1
+
+}
+
+# look for function end
+/^\s?\}/ && doing_function_chunk {
+    # looks like function end so mark it as we need to try and pick up alias
+    # in_function_end is checked at start of desc
+    found_function_end = 1
+}
+
+# ALIAS, needs to be on line imediately following the closing }
+/^alias / && doing_function_chunk && found_function_end {
+    content_function_name = gensub(\
+        /^alias (.*)=.*/, \
+        "\\1()", \
+        "g" \
+    )
+    # done with chunk if we get here
+    doing_function_chunk = 0
+    # mark it to be finalized
+    finalize_function_docs = 1
+}
+
+# blank line and doing_function_chunk we show a function ended then mark it
+(/^\s*$/ || /^#\s?end$/ ) && doing_function_chunk && found_function_end {
+    # done with chunk if we get here
+    doing_function_chunk = 0
+    # mark it to be finalized
+    finalize_function_docs = 1
+}
+
+# this is here as we want to finish only after blank line or alias
+{
+    if (finalize_function_docs ) {
+        if (is_internal ) {
+            is_internal = 0
+        } else {
+            doc = doc "\n" render("h_rule") "\n"
+            doc = doc "\n" render("h2", content_function_name) "\n" docblock
         }
-    }
 
-    docblock = ""
-    reset()
+        finalize_function_docs = 0
+        content_function_name = ""
+        reset()
+        docblock = ""
+    }
 }
 
 END {
+
     if (filedoc != "") {
         print filedoc
     }
