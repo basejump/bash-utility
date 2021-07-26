@@ -4,19 +4,21 @@
 
 Functions for array operations and manipulations.
 
+---
+
 ### array::contains()
 
 
 Check if item exists in the given array.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- **$1** | (mixed): Item to search (needle).
-- **$2** | (array): array to be searched (haystack).
+- **$1** | (mixed) | Item to search (needle).
+- **$2** | (array) | array to be searched (haystack).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍  - If successful.
+- **0** 🎯 - If successful.
 - **1** 💥 - If no match found in the array.
 - **2** 💥 - Function missing arguments.
 
@@ -29,20 +31,23 @@ array::contains "c" ${array[@]}
 0
 ```
 
+---
+
 ### array::dedupe()
+
 
 Remove duplicate items from the array.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 array Array to be deduped.
+- **$1** | (array) | Array to be deduped.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
-- **2** 💥 Function missing arguments.
+- **0** 🎯 - If successful.
+- **2** 💥 - Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
 
 - Deduplicated array.
 
@@ -57,17 +62,20 @@ b
 c
 ```
 
+---
+
 ### array::is_empty()
+
 
 Check if a given array is empty.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 array Array to be checked.
+- **$1** | (array) | Array to be checked.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍  If the given array is empty.
+- **0** 🎯 If the given array is empty.
 - **2** 💥 If the given array is not empty.
 
 #### Example
@@ -77,23 +85,28 @@ array=("a" "b" "c" "d")
 array::is_empty "${array[@]}"
 ```
 
+---
+
 ### array::join()
 
+
 Join array elements with a string.
+the output is a string containing a string representation of all the array elements in the same order,
+with the $2 glue string between each element.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string String to join the array elements (glue).
-- @arg $2 array array to be joined with glue string.
+- **$1** | (string) | String to join the array elements (glue).
+- **$2** | (array) | array to be joined with glue string.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯 If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
 
-- String containing a string representation of all the array elements in the same order,with the glue string between each element.
+- string representation of all the array elements
 
 #### Example
 
@@ -107,20 +120,23 @@ printf "%s" "$(array::join "" "${array[@]}")"
 abcd
 ```
 
+---
+
 ### array::reverse()
+
 
 Return an array with elements in reverse order.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 array The input array.
+- **$1** | (array) | The input array.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
 
 - The reversed array.
 
@@ -133,20 +149,23 @@ printf "%s" "$(array::reverse "${array[@]}")"
 5 4 3 2 1
 ```
 
+---
+
 ### array::random_element()
+
 
 Returns a random item from the array.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 array The input array.
+- **$1** | (array) | The input array.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
 
 - Random item out of the array.
 
@@ -159,20 +178,23 @@ printf "%s\n" "$(array::random_element "${array[@]}")"
 c
 ```
 
+---
+
 ### array::sort()
+
 
 Sort an array from lowest to highest.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 array The input array.
+- **$1** | (array) | The input array.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
 
 - sorted array.
 
@@ -190,20 +212,23 @@ a c
 d
 ```
 
+---
+
 ### array::rsort()
+
 
 Sort an array in reverse order (highest to lowest).
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 array The input array.
+- **$1** | (array) | The input array.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
 
 - reverse sorted array.
 
@@ -221,21 +246,24 @@ a
 1
 ```
 
+---
+
 ### array::bsort()
+
 
 Bubble sort an integer array from lowest to highest.
 This sort does not work on string array.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 array The input array.
+- **$1** | (array) | The input array.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
 
 - bubble sorted array.
 
@@ -251,22 +279,25 @@ array::bsort "${iarr[@]}"
 5
 ```
 
+---
+
 ### array::merge()
+
 
 Merge two arrays.
 Pass the variable name of the array instead of value of the variable.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string variable name of first array.
-- @arg $2 string variable name of second array.
+- **$1** | (string) | variable name of first array.
+- **$2** | (string) | variable name of second array.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
 
 - Merged array.
 
@@ -288,19 +319,25 @@ c
 
 Helper functions.
 
+---
+
 ### check::command_exists()
 
 Check if the command exists in the system.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Command name to be searched.
+- **$1** | (string) | Command name to be searched.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If the command exists.
+- **0** 🎯  If the command exists.
 - **1** 💥  If the command does not exist.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -308,16 +345,26 @@ Check if the command exists in the system.
 check::command_exists "tput"
 ```
 
+---
+
 ### check::is_sudo()
 
 Check if the script is executed with sudo privilege.
 
 *Function has no arguments.*
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If the script is executed with root privilege.
+- **0** 🎯  If the script is executed with root privilege.
 - **1** 💥  If the script is not executed with root privilege
+
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
+
+- # @noargs
 
 #### Example
 
@@ -330,22 +377,32 @@ check::is_sudo
 
 (Experimental) Functions to iterates over a list of elements, yielding each in turn to an iteratee function.
 
+---
+
 ### collection::each()
 
 Iterates over elements of collection and invokes iteratee for each element.
 Input to the function can be a pipe output, here-string or file.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Iteratee function.
+- **$1** | (string) | Iteratee function.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 - other exitcode returned by iteratee.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Output of iteratee function.
 
@@ -375,20 +432,26 @@ out=("$(array::dedupe "${arr1[@]}")")
 collection::each "test_func"  <<< "${out[@]}"
 ```
 
+---
+
 ### collection::every()
 
 Checks if iteratee function returns truthy for all elements of collection. Iteration is stopped once predicate returns false.
 Input to the function can be a pipe output, here-string or file.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Iteratee function.
+- **$1** | (string) | Iteratee function.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If iteratee function fails.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -397,21 +460,27 @@ arri=("1" "2" "3" "4")
 printf "%s\n" "${arri[@]}" | collection::every "variable::is_numeric"
 ```
 
+---
+
 ### collection::filter()
 
 Iterates over elements of array, returning all elements where iteratee returns true.
 Input to the function can be a pipe output, here-string or file.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Iteratee function.
+- **$1** | (string) | Iteratee function.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - array values matching the iteratee function.
 
@@ -426,22 +495,28 @@ printf "%s\n" "${arri[@]}" | collection::filter "variable::is_numeric"
 3
 ```
 
+---
+
 ### collection::find()
 
 Iterates over elements of collection, returning the first element where iteratee returns true.
 Input to the function can be a pipe output, here-string or file.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Iteratee function.
+- **$1** | (string) | Iteratee function.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If no match found.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - first array value matching the iteratee function.
 
@@ -457,22 +532,28 @@ printf "%s\n" "${arr[@]}" | collection::find "check_a"
 a
 ```
 
+---
+
 ### collection::invoke()
 
 Invokes the iteratee with each element passed as argument to the iteratee.
 Input to the function can be a pipe output, here-string or file.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Iteratee function.
+- **$1** | (string) | Iteratee function.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 - other exitcode returned by iteratee.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Output from the iteratee function.
 
@@ -483,22 +564,28 @@ opt=("-a" "-l")
 printf "%s\n" "${opt[@]}" | collection::invoke "ls"
 ```
 
+---
+
 ### collection::map()
 
 Creates an array of values by running each element in array through iteratee.
 Input to the function can be a pipe output, here-string or file.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Iteratee function.
+- **$1** | (string) | Iteratee function.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 - other exitcode returned by iteratee.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Output result of iteratee on value.
 
@@ -514,21 +601,27 @@ add_one(){
 printf "%s\n" "${arri[@]}" | collection::map "add_one"
 ```
 
+---
+
 ### collection::reject()
 
 The opposite of filter function; this method returns the elements of collection that iteratee does not return true.
 Input to the function can be a pipe output, here-string or file.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Iteratee function.
+- **$1** | (string) | Iteratee function.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - array values not matching the iteratee function.
 
@@ -545,20 +638,26 @@ a
 
 - [collection::filter](#collectionfilter)
 
+---
+
 ### collection::some()
 
 Checks if iteratee returns true for any element of the array.
 Input to the function can be a pipe output, here-string or file.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Iteratee function.
+- **$1** | (string) | Iteratee function.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If match successful.
+- **0** 🎯  If match successful.
 - **1** 💥 If no match found.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -572,18 +671,28 @@ printf "%s\n" "${arr[@]}" | collection::reject "variable::is_numeric"
 
 Functions for manipulating dates.
 
+---
+
 ### date::now()
 
 Get current time in unix timestamp.
 
 *Function has no arguments.*
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
+
+- # @noargs
+
+#### 🖨 Stdout output
 
 - current timestamp.
 
@@ -595,21 +704,27 @@ echo "$(date::now)"
 1591554426
 ```
 
+---
+
 ### date::epoc()
 
 convert datetime string to unix timestamp.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string date time in any format.
+- **$1** | (string) | date time in any format.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp for specified datetime.
 
@@ -621,23 +736,29 @@ echo "$(date::epoc "2020-07-07 18:38")"
 1594143480
 ```
 
+---
+
 ### date::add_days_from()
 
 Add number of days from specified timestamp.
 If number of days not specified then it defaults to 1 day.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of days (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of days (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -649,23 +770,29 @@ echo "$(date::add_days_from "1594143480")"
 1594229880
 ```
 
+---
+
 ### date::add_months_from()
 
 Add number of months from specified timestamp.
 If number of months not specified then it defaults to 1 month.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of months (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of months (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -677,23 +804,29 @@ echo "$(date::add_months_from "1594143480")"
 1596821880
 ```
 
+---
+
 ### date::add_years_from()
 
 Add number of years from specified timestamp.
 If number of years not specified then it defaults to 1 year.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of years (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of years (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -705,23 +838,29 @@ echo "$(date::add_years_from "1594143480")"
 1625679480
 ```
 
+---
+
 ### date::add_weeks_from()
 
 Add number of weeks from specified timestamp.
 If number of weeks not specified then it defaults to 1 week.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of weeks (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of weeks (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -733,23 +872,29 @@ echo "$(date::add_weeks_from "1594143480")"
 1594748280
 ```
 
+---
+
 ### date::add_hours_from()
 
 Add number of hours from specified timestamp.
 If number of hours not specified then it defaults to 1 hour.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of hours (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of hours (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -761,23 +906,29 @@ echo "$(date::add_hours_from "1594143480")"
 1594147080
 ```
 
+---
+
 ### date::add_minutes_from()
 
 Add number of minutes from specified timestamp.
 If number of minutes not specified then it defaults to 1 minute.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of minutes (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of minutes (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -789,23 +940,29 @@ echo "$(date::add_minutes_from "1594143480")"
 1594143540
 ```
 
+---
+
 ### date::add_seconds_from()
 
 Add number of seconds from specified timestamp.
 If number of seconds not specified then it defaults to 1 second.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of seconds (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of seconds (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -817,21 +974,27 @@ echo "$(date::add_seconds_from "1594143480")"
 1594143481
 ```
 
+---
+
 ### date::add_days()
 
 Add number of days from current day timestamp.
 If number of days not specified then it defaults to 1 day.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of days (optional).
+- **$1** | (int) | number of days (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -843,21 +1006,27 @@ echo "$(date::add_days "1")"
 1591640826
 ```
 
+---
+
 ### date::add_months()
 
 Add number of months from current day timestamp.
 If number of months not specified then it defaults to 1 month.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of months (optional).
+- **$1** | (int) | number of months (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -869,21 +1038,27 @@ echo "$(date::add_months "1")"
 1594146426
 ```
 
+---
+
 ### date::add_years()
 
 Add number of years from current day timestamp.
 If number of years not specified then it defaults to 1 year.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of years (optional).
+- **$1** | (int) | number of years (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -895,21 +1070,27 @@ echo "$(date::add_years "1")"
 1623090426
 ```
 
+---
+
 ### date::add_weeks()
 
 Add number of weeks from current day timestamp.
 If number of weeks not specified then it defaults to 1 year.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of weeks (optional).
+- **$1** | (int) | number of weeks (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -921,21 +1102,27 @@ echo "$(date::add_weeks "1")"
 1592159226
 ```
 
+---
+
 ### date::add_hours()
 
 Add number of hours from current day timestamp.
 If number of hours not specified then it defaults to 1 hour.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of hours (optional).
+- **$1** | (int) | number of hours (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -947,21 +1134,27 @@ echo "$(date::add_hours "1")"
 1591558026
 ```
 
+---
+
 ### date::add_minutes()
 
 Add number of minutes from current day timestamp.
 If number of minutes not specified then it defaults to 1 minute.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $2 int number of minutes (optional).
+- **$2** | (int) | number of minutes (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -973,21 +1166,27 @@ echo "$(date::add_minutes "1")"
 1591554486
 ```
 
+---
+
 ### date::add_seconds()
 
 Add number of seconds from current day timestamp.
 If number of seconds not specified then it defaults to 1 second.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $2 int number of seconds (optional).
+- **$2** | (int) | number of seconds (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -999,23 +1198,29 @@ echo "$(date::add_seconds "1")"
 1591554427
 ```
 
+---
+
 ### date::sub_days_from()
 
 Subtract number of days from specified timestamp.
 If number of days not specified then it defaults to 1 day.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of days (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of days (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1027,23 +1232,29 @@ echo "$(date::sub_days_from "1594143480")"
 1594057080
 ```
 
+---
+
 ### date::sub_months_from()
 
 Subtract number of months from specified timestamp.
 If number of months not specified then it defaults to 1 month.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of months (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of months (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1055,23 +1266,29 @@ echo "$(date::sub_months_from "1594143480")"
 1591551480
 ```
 
+---
+
 ### date::sub_years_from()
 
 Subtract number of years from specified timestamp.
 If number of years not specified then it defaults to 1 year.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of years (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of years (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1083,23 +1300,29 @@ echo "$(date::sub_years_from "1594143480")"
 1562521080
 ```
 
+---
+
 ### date::sub_weeks_from()
 
 Subtract number of weeks from specified timestamp.
 If number of weeks not specified then it defaults to 1 week.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of weeks (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of weeks (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1111,23 +1334,29 @@ echo "$(date::sub_weeks_from "1594143480")"
 1593538680
 ```
 
+---
+
 ### date::sub_hours_from()
 
 Subtract number of hours from specified timestamp.
 If number of hours not specified then it defaults to 1 hour.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of hours (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of hours (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1139,23 +1368,29 @@ echo "$(date::sub_hours_from "1594143480")"
 1594139880
 ```
 
+---
+
 ### date::sub_minutes_from()
 
 Subtract number of minutes from specified timestamp.
 If number of minutes not specified then it defaults to 1 minute.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of minutes (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of minutes (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1167,23 +1402,29 @@ echo "$(date::sub_minutes_from "1594143480")"
 1594143420
 ```
 
+---
+
 ### date::sub_seconds_from()
 
 Subtract number of seconds from specified timestamp.
 If number of seconds not specified then it defaults to 1 second.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 int number of seconds (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (int) | number of seconds (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1195,21 +1436,27 @@ echo "$(date::sub_seconds_from "1594143480")"
 1594143479
 ```
 
+---
+
 ### date::sub_days()
 
 Subtract number of days from current day timestamp.
 If number of days not specified then it defaults to 1 day.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of days (optional).
+- **$1** | (int) | number of days (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1221,21 +1468,27 @@ echo "$(date::sub_days "1")"
 1588876026
 ```
 
+---
+
 ### date::sub_months()
 
 Subtract number of months from current day timestamp.
 If number of months not specified then it defaults to 1 month.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of months (optional).
+- **$1** | (int) | number of months (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1247,21 +1500,27 @@ echo "$(date::sub_months "1")"
 1559932026
 ```
 
+---
+
 ### date::sub_years()
 
 Subtract number of years from current day timestamp.
 If number of years not specified then it defaults to 1 year.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of years (optional).
+- **$1** | (int) | number of years (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1273,21 +1532,27 @@ echo "$(date::sub_years "1")"
 1591468026
 ```
 
+---
+
 ### date::sub_weeks()
 
 Subtract number of weeks from current day timestamp.
 If number of weeks not specified then it defaults to 1 week.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of weeks (optional).
+- **$1** | (int) | number of weeks (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1299,21 +1564,27 @@ echo "$(date::sub_weeks "1")"
 1590949626
 ```
 
+---
+
 ### date::sub_hours()
 
 Subtract number of hours from current day timestamp.
 If number of hours not specified then it defaults to 1 hour.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of hours (optional).
+- **$1** | (int) | number of hours (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1325,21 +1596,27 @@ echo "$(date::sub_hours "1")"
 1591550826
 ```
 
+---
+
 ### date::sub_minutes()
 
 Subtract number of minutes from current day timestamp.
 If number of minutes not specified then it defaults to 1 minute.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of minutes (optional).
+- **$1** | (int) | number of minutes (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1351,21 +1628,27 @@ echo "$(date::sub_minutes "1")"
 1591554366
 ```
 
+---
+
 ### date::sub_seconds()
 
 Subtract number of seconds from current day timestamp.
 If number of seconds not specified then it defaults to 1 second.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of seconds (optional).
+- **$1** | (int) | number of seconds (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate timestamp.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - timestamp.
 
@@ -1377,23 +1660,29 @@ echo "$(date::sub_seconds "1")"
 1591554425
 ```
 
+---
+
 ### date::format()
 
 Format unix timestamp to human readable format.
 If format string is not specified then it defaults to "yyyy-mm-dd hh:mm:ss" format.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int unix timestamp.
-- @arg $2 string format control characters based on `date` command (optional).
+- **$1** | (int) | unix timestamp.
+- **$2** | (string) | format control characters based on `date` command (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If unable to generate time string.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - formatted time string.
 
@@ -1410,16 +1699,22 @@ echo echo "$(date::format "1594143480")"
 
 Functions to facilitate debugging scripts.
 
+---
+
 ### debug::print_array()
 
 Prints the content of array as key value pair for easier debugging.
 Pass the variable name of the array instead of value of the variable.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string variable name of the array.
+- **$1** | (string) | variable name of the array.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Formatted key value of array.
 
@@ -1443,16 +1738,22 @@ baz = foobar
 foo = bar
 ```
 
+---
+
 ### debug::print_ansi()
 
 Function to print ansi escape sequence as is.
 This function helps debug ansi escape sequence in text by displaying the escape codes.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string input with ansi escape sequence.
+- **$1** | (string) | input with ansi escape sequence.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Ansi escape sequence printed in output as is.
 
@@ -1470,6 +1771,8 @@ debug::print_ansi "$txt"
 
 Functions for handling files.
 
+---
+
 ### file::make_temp_file()
 
 Create temporary file.
@@ -1477,12 +1780,20 @@ Function creates temporary file with random name. The temporary file will be del
 
 *Function has no arguments.*
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If failed to create temp file.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
+
+- # @noargs
+
+#### 🖨 Stdout output
 
 - file name of temporary file created.
 
@@ -1494,23 +1805,29 @@ echo "$(file::make_temp_file)"
 tmp.vgftzy
 ```
 
+---
+
 ### file::make_temp_dir()
 
 Create temporary directory.
 Function creates temporary directory with random name. The temporary directory will be deleted when script finishes.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Temporary directory prefix
-- @arg $2  string Flag to auto remove directory on exit trap (true)
+- **$1** | (string) | Temporary directory prefix
+- **$2** | (string) | Flag to auto remove directory on exit trap (true)
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If failed to create temp directory.
 - **2** 💥 Missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - directory name of temporary directory created.
 
@@ -1522,20 +1839,26 @@ echo "$(utility::make_temp_dir)"
 tmp.rtfsxy
 ```
 
+---
+
 ### file::name()
 
 Get only the filename from string path.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string path.
+- **$1** | (string) | path.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - name of the file with extension.
 
@@ -1547,20 +1870,26 @@ echo "$(file::name "/path/to/test.md")"
 test.md
 ```
 
+---
+
 ### file::basename()
 
 Get the basename of file from file name.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string path.
+- **$1** | (string) | path.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - basename of the file.
 
@@ -1572,21 +1901,27 @@ echo "$(file::basename "/path/to/test.md")"
 test
 ```
 
+---
+
 ### file::extension()
 
 Get the extension of file from file name.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string path.
+- **$1** | (string) | path.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥 If no extension is found in the filename.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - extension of the file.
 
@@ -1598,20 +1933,26 @@ echo "$(file::extension "/path/to/test.md")"
 md
 ```
 
+---
+
 ### file::dirname()
 
 Get directory name from file path.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string path.
+- **$1** | (string) | path.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - directory path.
 
@@ -1623,21 +1964,27 @@ echo "$(file::dirname "/path/to/test.md")"
 /path/to
 ```
 
+---
+
 ### file::full_path()
 
 Get absolute path of file or directory.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string relative or absolute path to file/direcotry.
+- **$1** | (string) | relative or absolute path to file/direcotry.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥  If file/directory does not exist.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Absolute path to file/directory.
 
@@ -1649,22 +1996,28 @@ file::full_path "../path/to/file.md"
 /home/labbots/docs/path/to/file.md
 ```
 
+---
+
 ### file::mime_type()
 
 Get mime type of provided input.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string relative or absolute path to file/directory.
+- **$1** | (string) | relative or absolute path to file/directory.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **1** 💥  If file/directory does not exist.
 - **2** 💥 Function missing arguments.
 - **3** 💥 If file or mimetype command not found in system.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - mime type of file/directory.
 
@@ -1676,20 +2029,26 @@ file::mime_type "../src/file.sh"
 application/x-shellscript
 ```
 
+---
+
 ### file::contains_text()
 
 Search if a given pattern is found in file.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string relative or absolute path to file/directory.
-- @arg $2 string search key or regular expression.
+- **$1** | (string) | relative or absolute path to file/directory.
+- **$2** | (string) | search key or regular expression.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If given search parameter is found in file.
+- **0** 🎯  If given search parameter is found in file.
 - **1** 💥  If search paramter not found in file.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -1705,20 +2064,26 @@ file::contains_text "./file.sh" "@file"
 
 Functions to format provided input.
 
+---
+
 ### format::human_readable_seconds()
 
 Format seconds to human readable format.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int number of seconds.
+- **$1** | (int) | number of seconds.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - formatted time string.
 
@@ -1730,20 +2095,26 @@ echo "$(format::human_readable_seconds "356786")"
 4 days 3 hours 6 minute(s) and 26 seconds
 ```
 
+---
+
 ### format::bytes_to_human()
 
 Format bytes to human readable format.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 int size in bytes.
+- **$1** | (int) | size in bytes.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - formatted file size string.
 
@@ -1755,19 +2126,25 @@ echo "$(format::bytes_to_human "2250")"
 2.19 KB
 ```
 
+---
+
 ### format::strip_ansi()
 
 Remove Ansi escape sequences from given text.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Input text to be ansi stripped.
+- **$1** | (string) | Input text to be ansi stripped.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Ansi stripped text.
 
@@ -1779,21 +2156,27 @@ format::strip_ansi "\e[1m\e[91mThis is bold red text\e(B\e[m.\e[92mThis is green
 This is bold red text.This is green text.
 ```
 
+---
+
 ### format::text_center()
 
 Prints the given text to centre of terminal.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Text to be printed.
-- @arg $2 string Filler symbol to be added to prefix and suffix of the text (optional). Defaults to space as filler.
+- **$1** | (string) | Text to be printed.
+- **$2** | (string) | Filler symbol to be added to prefix and suffix of the text (optional). Defaults to space as filler.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - formatted text.
 
@@ -1803,21 +2186,27 @@ Prints the given text to centre of terminal.
 format::text_center "This text is in centre of the terminal." "-"
 ```
 
+---
+
 ### format::report()
 
 Format String to print beautiful report.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Text to be printed on the left.
-- @arg $2 string Text to be printed within the square brackets.
+- **$1** | (string) | Text to be printed on the left.
+- **$2** | (string) | Text to be printed within the square brackets.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - formatted text.
 
@@ -1829,21 +2218,27 @@ format::report "Initialising mission state" "Success"
 Initialising mission state ....................................................................[ Success ]
 ```
 
+---
+
 ### format::trim_text_to_term()
 
 Trim given text to width of the terminal window.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Text of first sentence.
-- @arg $2 string Text of second sentence (optional).
+- **$1** | (string) | Text of first sentence.
+- **$2** | (string) | Text of second sentence (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - trimmed text.
 
@@ -1860,20 +2255,26 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod..This is
 
 Functions to enable interaction with the user.
 
+---
+
 ### interaction::prompt_yes_no()
 
 Prompt yes or no question to the user.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string The question to be prompted to the user.
-- @arg $2 string default answer \[yes/no\] (optional).
+- **$1** | (string) | The question to be prompted to the user.
+- **$2** | (string) | default answer \[yes/no\] (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If user responds with yes.
+- **0** 🎯  If user responds with yes.
 - **1** 💥  If user responds with no.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -1883,21 +2284,27 @@ interaction::prompt_yes_no "Are you sure to proceed" "yes"
 Are you sure to proceed (y/n)? [y]
 ```
 
+---
+
 ### interaction::prompt_response()
 
 Prompt question to the user.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string The question to be prompted to the user.
-- @arg $2 string default answer (optional).
+- **$1** | (string) | The question to be prompted to the user.
+- **$2** | (string) | default answer (optional).
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If user responds with answer.
+- **0** 🎯  If user responds with answer.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - User entered answer to the question.
 
@@ -1914,22 +2321,28 @@ Choose directory to install? [/home/path]
 
 Simple json manipulation. These functions does not completely replace `jq` in any way.
 
+---
+
 ### json::get_value()
 
 Extract value from json based on key and position.
 Input to the function can be a pipe output, here-string or file.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string id of the field to fetch.
-- @arg $2 int position of value to extract.Defaults to 1.(optional)
+- **$1** | (string) | id of the field to fetch.
+- **$2** | (int) | position of value to extract.Defaults to 1.(optional)
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If match successful.
+- **0** 🎯  If match successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - string value of extracted key.
 
@@ -1946,16 +2359,26 @@ echo "{\"data\":{\"id\":\"123\",\"value\":\"name string\"}}" | json::get_value "
 
 Set of miscellaneous helper functions.
 
+---
+
 ### misc::check_internet_connection()
 
 Check if internet connection is available.
 
 *Function has no arguments.*
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If script can connect to internet.
+- **0** 🎯  If script can connect to internet.
 - **1** 💥 If script cannot access internet.
+
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
+
+- # @noargs
 
 #### Example
 
@@ -1963,20 +2386,26 @@ Check if internet connection is available.
 misc::check_internet_connection
 ```
 
+---
+
 ### misc::get_pid()
 
 Get list of process ids based on process name.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 Name of the process to search.
+- **$1** | (Name) | of the process to search.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If match successful.
+- **0** 🎯  If match successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - list of process ids.
 
@@ -1991,20 +2420,26 @@ misc::get_pid "chrome"
 26561
 ```
 
+---
+
 ### misc::get_uid()
 
 Get user id based on username.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 username to search.
+- **$1** | (username) | to search.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If match successful.
+- **0** 🎯  If match successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - string uid for the username.
 
@@ -2016,17 +2451,27 @@ misc::get_uid "labbots"
 1000
 ```
 
+---
+
 ### misc::generate_uuid()
 
 Generate random uuid.
 
 *Function has no arguments.*
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If match successful.
+- **0** 🎯  If match successful.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
+
+- # @noargs
+
+#### 🖨 Stdout output
 
 - random generated uuid.
 
@@ -2043,18 +2488,28 @@ misc::generate_uuid
 
 Functions to detect Operating system and version.
 
+---
+
 ### os::detect_os()
 
 Identify the OS the function is run on.
 
 *Function has no arguments.*
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If OS is successfully detected.
+- **0** 🎯  If OS is successfully detected.
 - **1** 💥 If unable to detect OS.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @noargs
+
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Operating system name (linux, mac or windows).
 
@@ -2066,18 +2521,28 @@ os::detect_os
 linux
 ```
 
+---
+
 ### os::detect_linux_distro()
 
 Identify the distribution flavour of linux.
 
 *Function has no arguments.*
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If Linux distro is successfully detected.
+- **0** 🎯  If Linux distro is successfully detected.
 - **1** 💥 If unable to detect OS distro.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @noargs
+
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Linux OS distribution name (ubuntu, debian, suse, etc.,).
 
@@ -2089,18 +2554,28 @@ os::detect_linux_distro
 ubuntu
 ```
 
+---
+
 ### os::detect_linux_version()
 
 Identify the Linux version.
 
 *Function has no arguments.*
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If Linux version is successfully detected.
+- **0** 🎯  If Linux version is successfully detected.
 - **1** 💥 If unable to detect Linux version.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @noargs
+
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Linux OS version number (18.04, 20.04, etc.,).
 
@@ -2112,18 +2587,28 @@ os::detect_linux_version
 20.04
 ```
 
+---
+
 ### os::detect_mac_version()
 
 Identify the MacOS version.
 
 *Function has no arguments.*
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If MacOS version is successfully detected.
+- **0** 🎯  If MacOS version is successfully detected.
 - **1** 💥 If unable to detect MacOS version.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @noargs
+
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - MacOS version number (10.15.6, etc.,)
 
@@ -2140,20 +2625,26 @@ os::detect_linux_version
 
 Functions for string operations and manipulations.
 
+---
+
 ### string::trim()
 
 Strip whitespace from the beginning and end of a string.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string The string to be trimmed.
+- **$1** | (string) | The string to be trimmed.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - The trimmed string.
 
@@ -2165,21 +2656,27 @@ echo "$(string::trim "   Hello World!   ")"
 Hello World!
 ```
 
+---
+
 ### string::split()
 
 Split a string to array by a delimiter.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string The input string.
-- @arg $2 string The delimiter string.
+- **$1** | (string) | The input string.
+- **$2** | (string) | The delimiter string.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Returns an array of strings created by splitting the string parameter by the delimiter.
 
@@ -2193,21 +2690,27 @@ Hello
 World
 ```
 
+---
+
 ### string::lstrip()
 
 Strip characters from the beginning of a string.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string The input string.
-- @arg $2 string The characters you want to strip.
+- **$1** | (string) | The input string.
+- **$2** | (string) | The characters you want to strip.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Returns the modified string.
 
@@ -2219,21 +2722,27 @@ echo "$(string::lstrip "Hello World!" "He")"
 llo World!
 ```
 
+---
+
 ### string::rstrip()
 
 Strip characters from the end of a string.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string The input string.
-- @arg $2 string The characters you want to strip.
+- **$1** | (string) | The input string.
+- **$2** | (string) | The characters you want to strip.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Returns the modified string.
 
@@ -2245,20 +2754,26 @@ echo "$(string::rstrip "Hello World!" "d!")"
 Hello Worl
 ```
 
+---
+
 ### string::to_lower()
 
 Make a string lowercase.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string The input string.
+- **$1** | (string) | The input string.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Returns the lowercased string.
 
@@ -2270,20 +2785,26 @@ echo "$(string::to_lower "HellO")"
 hello
 ```
 
+---
+
 ### string::to_upper()
 
 Make a string all uppercase.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string The input string.
+- **$1** | (string) | The input string.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If successful.
+- **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
 
 - Returns the uppercased string.
 
@@ -2295,20 +2816,26 @@ echo "$(string::to_upper "HellO")"
 HELLO
 ```
 
+---
+
 ### string::contains()
 
 Check whether the search string exists within the input string.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string The input string.
-- @arg $2 string The search key.
+- **$1** | (string) | The input string.
+- **$2** | (string) | The search key.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If match found.
+- **0** 🎯  If match found.
 - **1** 💥  If no match found.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2316,20 +2843,26 @@ Check whether the search string exists within the input string.
 string::contains "Hello World!" "lo"
 ```
 
+---
+
 ### string::starts_with()
 
 Check whether the input string starts with key string.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string The input string.
-- @arg $2 string The search key.
+- **$1** | (string) | The input string.
+- **$2** | (string) | The search key.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If match found.
+- **0** 🎯  If match found.
 - **1** 💥  If no match found.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2337,20 +2870,26 @@ Check whether the input string starts with key string.
 string::starts_with "Hello World!" "He"
 ```
 
+---
+
 ### string::ends_with()
 
 Check whether the input string ends with key string.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string The input string.
-- @arg $2 string The search key.
+- **$1** | (string) | The input string.
+- **$2** | (string) | The search key.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If match found.
+- **0** 🎯  If match found.
 - **1** 💥  If no match found.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2358,20 +2897,26 @@ Check whether the input string ends with key string.
 string::ends_with "Hello World!" "d!"
 ```
 
+---
+
 ### string::regex()
 
 Check whether the input string matches the given regex.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string The input string.
-- @arg $2 string The search key.
+- **$1** | (string) | The input string.
+- **$2** | (string) | The search key.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If match found.
+- **0** 🎯  If match found.
 - **1** 💥  If no match found.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2384,16 +2929,24 @@ string::regex "HELLO" "^[A-Z]*$"
 
 Set of useful terminal functions.
 
+---
+
 ### terminal::is_term()
 
 Check if script is run in terminal.
 
 *Function has no arguments.*
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If script is run on terminal.
+- **0** 🎯  If script is run on terminal.
 - **1** 💥 If script is not run on terminal.
+
+#### 🖨 Stdout output
+
+- # @noargs
+
+---
 
 ### terminal::detect_profile()
 
@@ -2401,29 +2954,35 @@ Detect profile rc file for zsh and bash of current script running user.
 
 *Function has no arguments.*
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If script is run on terminal.
+- **0** 🎯  If script is run on terminal.
 - **1** 💥 If script is not run on terminal.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
+
+- # @noargs
+
+#### 🖨 Stdout output
 
 - path to the profile file.
+
+---
 
 ### terminal::clear_line()
 
 Clear the output in terminal on the specified line number.
 This function clears line only on terminal.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 Line number to clear. Defaults to 1. (optional)
+- **$1** | (Line) | number to clear. Defaults to 1. (optional)
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If script is run on terminal.
+- **0** 🎯  If script is run on terminal.
 
-#### 💻 Stdout output
+#### 🖨 Stdout output
 
 - clear line ansi code.
 
@@ -2432,19 +2991,29 @@ This function clears line only on terminal.
 
 Functions to perform validation on given data.
 
+---
+
 ### validation::email()
 
 Validate whether a given input is a valid email address or not.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string input email address to validate.
+- **$1** | (string) | input email address to validate.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
 - # @exitcodes
 - **1** 💥  If provided input is not an email address.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
+
+#### 🖨 Stdout output
+
+- # @exitcodes
 
 #### Example
 
@@ -2456,19 +3025,25 @@ echo $?
 0
 ```
 
+---
+
 ### validation::ipv4()
 
 Validate whether a given input is a valid IP V4 address.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string input IPv4 address.
+- **$1** | (string) | input IPv4 address.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If provided input is a valid IPv4.
+- **0** 🎯  If provided input is a valid IPv4.
 - **1** 💥  If provided input is not a valid IPv4.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2502,19 +3077,25 @@ a.b.c.d             : bad
 0.192.168.1         : good
 ```
 
+---
+
 ### validation::ipv6()
 
 Validate whether a given input is a valid IP V6 address.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string input IPv6 address.
+- **$1** | (string) | input IPv6 address.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If provided input is a valid IPv6.
+- **0** 🎯  If provided input is a valid IPv6.
 - **1** 💥  If provided input is not a valid IPv6.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2542,19 +3123,25 @@ fezy::1ff:fe23:4567:890a                          = bad
 2001:db8::                                        = good
 ```
 
+---
+
 ### validation::alpha()
 
 Validate if given variable is entirely alphabetic characters.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Value of variable to validate.
+- **$1** | (string) | Value of variable to validate.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If input is only alpha characters.
+- **0** 🎯  If input is only alpha characters.
 - **1** 💥 If input contains any non alpha characters.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2566,19 +3153,25 @@ echo $?
 0
 ```
 
+---
+
 ### validation::alpha_num()
 
 Check if given variable contains only alpha-numeric characters.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Value of variable to validate.
+- **$1** | (string) | Value of variable to validate.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If input is an alpha-numeric.
+- **0** 🎯  If input is an alpha-numeric.
 - **1** 💥 If input is not an alpha-numeric.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2590,19 +3183,25 @@ echo $?
 0
 ```
 
+---
+
 ### validation::alpha_dash()
 
 Validate if given variable contains only alpha-numeric characters, as well as dashes and underscores.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Value of variable to validate.
+- **$1** | (string) | Value of variable to validate.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If input is valid.
+- **0** 🎯  If input is valid.
 - **1** 💥 If input the input is not valid.
 - **2** 💥 Function missing arguments.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2614,21 +3213,27 @@ echo $?
 0
 ```
 
+---
+
 ### validation::version_comparison()
 
 Compares version numbers and provides return based on whether the value in equal, less than or greater.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string Version number to check (eg: 1.0.1)
+- **$1** | (string) | Version number to check (eg: 1.0.1)
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍  version number is equal.
+- **0** 🎯 version number is equal.
 - **1** 💥 $1 version number is greater than $2.
 - **2** 💥 $1 version number is less than $2.
 - **3** 💥 Function is missing required arguments.
 - **4** 💥 Provided input argument is in invalid format.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2645,19 +3250,25 @@ echo $?
 
 Functions for handling variables.
 
+---
+
 ### variable::is_array()
 
 Check if given variable is array.
 Pass the variable name instead of value of the variable.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 string name of the variable to check.
+- **$1** | (string) | name of the variable to check.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If input is array.
+- **0** 🎯  If input is array.
 - **1** 💥 If input is not an array.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2668,18 +3279,24 @@ variable::is_array "arr"
 0
 ```
 
+---
+
 ### variable::is_numeric()
 
 Check if given variable is a number.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 mixed Value of variable to check.
+- **$1** | (mixed) | Value of variable to check.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If input is number.
+- **0** 🎯  If input is number.
 - **1** 💥 If input is not a number.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2689,18 +3306,24 @@ variable::is_numeric "1234"
 0
 ```
 
+---
+
 ### variable::is_int()
 
 Check if given variable is an integer.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 mixed Value of variable to check.
+- **$1** | (mixed) | Value of variable to check.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If input is an integer.
+- **0** 🎯  If input is an integer.
 - **1** 💥 If input is not an integer.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2710,18 +3333,24 @@ variable::is_int "+1234"
 0
 ```
 
+---
+
 ### variable::is_float()
 
 Check if given variable is a float.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 mixed Value of variable to check.
+- **$1** | (mixed) | Value of variable to check.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If input is a float.
+- **0** 🎯  If input is a float.
 - **1** 💥 If input is not a float.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2731,18 +3360,24 @@ variable::is_float "+1234.0"
 0
 ```
 
+---
+
 ### variable::is_bool()
 
 Check if given variable is a boolean.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 mixed Value of variable to check.
+- **$1** | (mixed) | Value of variable to check.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If input is a boolean.
+- **0** 🎯  If input is a boolean.
 - **1** 💥 If input is not a boolean.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2752,18 +3387,24 @@ variable::is_bool "true"
 0
 ```
 
+---
+
 ### variable::is_true()
 
 Check if given variable is a true.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 mixed Value of variable to check.
+- **$1** | (mixed) | Value of variable to check.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If input is true.
+- **0** 🎯  If input is true.
 - **1** 💥 If input is not true.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2773,18 +3414,24 @@ variable::is_true "true"
 0
 ```
 
+---
+
 ### variable::is_false()
 
 Check if given variable is false.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 mixed Value of variable to check.
+- **$1** | (mixed) | Value of variable to check.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If input is false.
+- **0** 🎯  If input is false.
 - **1** 💥 If input is not false.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 
@@ -2794,18 +3441,24 @@ variable::is_false "false"
 0
 ```
 
+---
+
 ### variable::is_empty_or_null()
 
 Check if given variable is empty or null.
 
-#### 🔑 Arguments
+#### 🔌 Arguments
 
-- @arg $1 mixed Value of variable to check.
+- **$1** | (mixed) | Value of variable to check.
 
-#### 🎯 Exit codes
+#### 💡 Exit codes
 
-- **0** 👍   If input is empty or null.
+- **0** 🎯  If input is empty or null.
 - **1** 💥 If input is not empty or null.
+
+#### 🖨 Stdout output
+
+- # @example
 
 #### Example
 

@@ -6,7 +6,7 @@
 ##
 # Check if item exists in the given array.
 #
-# @example
+# example:
 #   array=("a" "b" "c")
 #   array::contains "c" ${array[@]}
 #   #Output
@@ -15,9 +15,10 @@
 # $1 - mixed Item to search (needle).
 # $2 - array array to be searched (haystack).
 #
-# @exitcode 0 - If successful.
-# @exitcode 1 - If no match found in the array.
-# @exitcode 2 - Function missing arguments.
+# exitcodes:
+#  0 - If successful.
+#  1 - If no match found in the array.
+#  2 - Function missing arguments.
 #
 array::contains() {
     [[ $# -lt 2 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
@@ -31,9 +32,10 @@ array::contains() {
     return 1
 }
 
-# @description Remove duplicate items from the array.
+###
+# Remove duplicate items from the array.
 #
-# @example
+# example:
 #   array=("a" "b" "a" "c")
 #   printf "%s" "$(array::dedupe ${array[@]})"
 #   #Output
@@ -41,12 +43,13 @@ array::contains() {
 #   b
 #   c
 #
-# @arg $1 array Array to be deduped.
+# $1 array Array to be deduped.
 #
-# @exitcode 0  If successful.
-# @exitcode 2 Function missing arguments.
+# exitcodes:
+#  0 - If successful.
+#  2 - Function missing arguments.
 #
-# @stdout Deduplicated array.
+# stdout: Deduplicated array.
 array::dedupe() {
     [[ $# = 0 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     declare -A arr_tmp
@@ -58,13 +61,14 @@ array::dedupe() {
     printf '%s\n' "${arr_unique[@]}"
 }
 
-# @description Check if a given array is empty.
+###
+# Check if a given array is empty.
 #
-# @example
+# example:
 #   array=("a" "b" "c" "d")
 #   array::is_empty "${array[@]}"
 #
-# @arg $1 array Array to be checked.
+# $1 - array Array to be checked.
 #
 # @exitcode 0 If the given array is empty.
 # @exitcode 2 If the given array is not empty.
@@ -77,9 +81,13 @@ array::is_empty() {
         return 1
     fi
 }
-# @description Join array elements with a string.
+
+###
+# Join array elements with a string.
+# the output is a string containing a string representation of all the array elements in the same order,
+# with the $2 glue string between each element.
 #
-# @example
+# example:
 #   array=("a" "b" "c" "d")
 #   printf "%s" "$(array::join "," "${array[@]}")"
 #   #Output
@@ -88,13 +96,14 @@ array::is_empty() {
 #   #Output
 #   abcd
 #
-# @arg $1 string String to join the array elements (glue).
-# @arg $2 array array to be joined with glue string.
+# $1 - string String to join the array elements (glue).
+# $2 - array array to be joined with glue string.
 #
-# @exitcode 0  If successful.
-# @exitcode 2 Function missing arguments.
+# exitcodes:
+#  0 If successful.
+#  2 Function missing arguments.
 #
-# @stdout String containing a string representation of all the array elements in the same order,with the glue string between each element.
+# stdout: string representation of all the array elements
 array::join() {
     [[ $# -lt 2 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     declare delimiter="${1}"
@@ -104,20 +113,21 @@ array::join() {
     printf "%s" "${@/#/${delimiter}}"
 }
 
-# @description Return an array with elements in reverse order.
+###
+# Return an array with elements in reverse order.
 #
-# @example
+# example:
 #   array=(1 2 3 4 5)
 #   printf "%s" "$(array::reverse "${array[@]}")"
 #   #Output
 #   5 4 3 2 1
 #
-# @arg $1 array The input array.
+# $1 - array The input array.
 #
 # @exitcode 0  If successful.
 # @exitcode 2 Function missing arguments.
 #
-# @stdout The reversed array.
+# stdout: The reversed array.
 array::reverse() {
     [[ $# = 0 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     declare min=0
@@ -137,9 +147,10 @@ array::reverse() {
     printf '%s\n' "${array[@]}"
 }
 
-# @description Returns a random item from the array.
+###
+# Returns a random item from the array.
 #
-# @example
+# example:
 #   array=("a" "b" "c" "d")
 #   printf "%s\n" "$(array::random_element "${array[@]}")"
 #   #Output
@@ -150,7 +161,7 @@ array::reverse() {
 # @exitcode 0  If successful.
 # @exitcode 2 Function missing arguments.
 #
-# @stdout Random item out of the array.
+# stdout: Random item out of the array.
 array::random_element() {
     [[ $# = 0 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     declare -a array
@@ -158,9 +169,10 @@ array::random_element() {
     printf '%s\n' "${array[RANDOM % $#]}"
 }
 
-# @description Sort an array from lowest to highest.
+###
+# Sort an array from lowest to highest.
 #
-# @example
+# example:
 #   sarr=("a c" "a" "d" 2 1 "4 5")
 #   array::array_sort "${sarr[@]}"
 #   #Output
@@ -176,7 +188,7 @@ array::random_element() {
 # @exitcode 0  If successful.
 # @exitcode 2 Function missing arguments.
 #
-# @stdout sorted array.
+# stdout: sorted array.
 array::sort() {
     [[ $# = 0 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     declare -a array=("$@")
@@ -191,9 +203,10 @@ array::sort() {
     printf "%s\n" "${sorted[@]}"
 }
 
-# @description Sort an array in reverse order (highest to lowest).
+###
+# Sort an array in reverse order (highest to lowest).
 #
-# @example
+# example:
 #   sarr=("a c" "a" "d" 2 1 "4 5")
 #   array::array_sort "${sarr[@]}"
 #   #Output
@@ -209,7 +222,7 @@ array::sort() {
 # @exitcode 0  If successful.
 # @exitcode 2 Function missing arguments.
 #
-# @stdout reverse sorted array.
+# stdout: reverse sorted array.
 array::rsort() {
     [[ $# = 0 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     declare -a array=("$@")
@@ -224,9 +237,11 @@ array::rsort() {
     printf "%s\n" "${sorted[@]}"
 }
 
-# @description Bubble sort an integer array from lowest to highest.
+###
+# Bubble sort an integer array from lowest to highest.
 # This sort does not work on string array.
-# @example
+#
+# example:
 #   iarr=(4 5 1 3)
 #   array::bsort "${iarr[@]}"
 #   #Output
@@ -240,7 +255,7 @@ array::rsort() {
 # @exitcode 0  If successful.
 # @exitcode 2 Function missing arguments.
 #
-# @stdout bubble sorted array.
+# stdout: bubble sorted array.
 array::bsort() {
     [[ $# = 0 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     declare tmp
@@ -258,9 +273,11 @@ array::bsort() {
     printf "%s\n" "${arr[@]}"
 }
 
-# @description Merge two arrays.
+###
+# Merge two arrays.
 # Pass the variable name of the array instead of value of the variable.
-# @example
+#
+# example:
 #   a=("a" "c")
 #   b=("d" "c")
 #   array::merge "a[@]" "b[@]"
@@ -270,13 +287,14 @@ array::bsort() {
 #   d
 #   c
 #
-# @arg $1 string variable name of first array.
-# @arg $2 string variable name of second array.
+# $1 - string variable name of first array.
+# $2 - string variable name of second array.
 #
 # @exitcode 0  If successful.
 # @exitcode 2 Function missing arguments.
 #
-# @stdout Merged array.
+# stdout: Merged array.
+#
 array::merge() {
     [[ $# -ne 2 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     declare -a arr1=("${!1}")

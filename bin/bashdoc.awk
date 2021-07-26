@@ -36,7 +36,7 @@ BEGIN {
     styles["/code", "to"] = "```"
 
     styles["argN", "from"] = "^(\\$[0-9])[ -]*\\(?+(\\w+)\\)?+"
-    styles["argN", "to"] = "**\\1** | (\\2):"
+    styles["argN", "to"] = "**\\1** | (\\2) |"
     # styles["argN", "to"] = "**\\1** | (\\2) | "
 
     styles["arg@", "from"] = "^\\$@ (\\S+)"
@@ -56,7 +56,7 @@ BEGIN {
     styles["exitcode", "to"] = "**\\1** 💥 \\2"
 
     styles["exitcode0", "from"] = "([>!]?[0]{1}) (.*)"
-    styles["exitcode0", "to"] = "**0** 👍  \\2"
+    styles["exitcode0", "to"] = "**0** 🎯 \\2"
 
     styles["h_rule", "to"] = "---"
 
@@ -119,6 +119,13 @@ function reset() {
     content_stdout = ""
 }
 
+function description_start() {
+    in_description = 1
+    in_example = 0
+    reset()
+    docblock = ""
+}
+
 /^[[:space:]]*# @internal/ {
     is_internal = 1
 }
@@ -141,37 +148,25 @@ function reset() {
     filedoc = filedoc "\n" $0
 }
 
+# Description
 /^[[:space:]]*# @description/ {
-    in_description = 1
-    in_example = 0
-
-    reset()
-
-    docblock = ""
+    description_start()
 }
 
-# desc start with #---
+# Description start with #---
 /^[[:space:]]*#\s*-{3}/ {
-    in_description = 1
-    in_example = 0
-
-    reset()
-
-    docblock = ""
+    description_start()
 }
 
-# desc start with ##
+# Description start with ##
 /^[[:space:]]*#\s?#/ {
-    in_description = 1
-    in_example = 0
-
-    reset()
-
-    docblock = ""
+    description_start()
 }
 
 in_description {
-    if (/^[^[[:space:]]*#]|^[[:space:]]*# @[^d]|^[[:space:]]*[^#]/) {
+    # any one of these will stop the decription flow.
+    # not a `# `, any `# @` thats not a @desc, any `# example` and any line thats not a `# ` comment
+    if (/^[^[[:space:]]*#]/ || /^[[:space:]]*# @[^d]/ || /^[[:space:]]*# example/ || /^[[:space:]]*[^#]/) {
         if (!match(content_desc, /\n$/)) {
             content_desc = content_desc "\n"
         }
@@ -202,7 +197,8 @@ in_example {
     }
 }
 
-/^[[:space:]]*# @example/ {
+# Example @example
+/^[[:space:]]*# @?example/ {
     in_example = 1
     content_example = content_example "\n" render("h3", "Example")
     content_example = content_example "\n\n" render("code", "bash")
@@ -210,41 +206,22 @@ in_example {
 
 /^[[:space:]]*# @arg/ {
     do_args = 1
-    # if (!has_args_heading) {
-    #     has_args_heading = 1
-
-    #     content_args = content_args "\n" render("h3", "🔑 Arguments") "\n\n"
-    #     # content_args = content_args "\n" "$arg     | desc" "\n" ":-------:|------" "\n"
-
-    # }
-
-    # sub(/^[[:space:]]*# @arg /, "")
-
-    # $0 = render("argN", $0)
-    # $0 = render("arg@", $0)
-
-    # content_args = content_args $0 "\n"
 }
 
 # args in form # $1 -
 /^[[:space:]]*# \$[1-9]/ {
     do_args = 1
-    # if (!has_args) {
-    #     has_args = 1
-    #     content_args = content_args "\n" render("h3", "🔑 Arguments") "\n\n"
-    # }
-    # sub(/^[[:space:]]*# /, "")
-    # $0 = render("argN", $0)
-    # content_args = content_args render("li", $0) "\n"
 }
 
 do_args {
     if (!has_args_heading) {
         has_args_heading = 1
-        content_args = content_args "\n" render("h3", "🔑 Arguments") "\n\n"
+        content_args = content_args "\n" render("h3", "🔌 Arguments") "\n\n"
     }
+    sub(/^[[:space:]]*#\s*@arg\s*/, "")
     sub(/^[[:space:]]*# /, "")
     $0 = render("argN", $0)
+    # $0 = render("arg@", $0)
     content_args = content_args render("li", $0) "\n"
     do_args = 0
 }
@@ -254,11 +231,39 @@ do_args {
     content_args = content_args "\n" render("i", "Function has no arguments.") "\n"
 }
 
+in_exitcodes {
+
+    # for any line thats a pound and a number `# 0-9`
+    if (/^[[:space:]]*#\s*[0-9]/) {
+        sub(/^[[:space:]]*#\s*/, "")
+        $0 = render("exitcode0", $0)
+        $0 = render("exitcode", $0)
+        content_exitcode = content_exitcode render("li", $0) "\n"
+    } else {
+        # break out on anything else
+        in_exitcodes = 0
+    }
+}
+
+/^[[:space:]]*# exitcodes/ {
+    if (!has_exitcode) {
+        has_exitcode = 1
+        content_exitcode = content_exitcode "\n" render("h3", "💡 Exit codes") "\n\n"
+    }
+    in_exitcodes = 1
+    # sub(/^[[:space:]]*# @exitcode /, "")
+
+    # $0 = render("exitcode0", $0)
+    # $0 = render("exitcode", $0)
+
+    # content_exitcode = content_exitcode render("li", $0) "\n"
+}
+
 /^[[:space:]]*# @exitcode/ {
     if (!has_exitcode) {
         has_exitcode = 1
 
-        content_exitcode = content_exitcode "\n" render("h3", "🎯 Exit codes") "\n\n"
+        content_exitcode = content_exitcode "\n" render("h3", "💡 Exit codes") "\n\n"
     }
 
     sub(/^[[:space:]]*# @exitcode /, "")
@@ -277,12 +282,13 @@ do_args {
     content_seealso = content_seealso "\n" render("h3", "See also") "\n\n" $0 "\n"
 }
 
-/^[[:space:]]*# @stdout/ {
+/^[[:space:]]*# [@stdout|stdout:]/ {
     has_stdout = 1
 
     sub(/^[[:space:]]*# @stdout /, "")
+    sub(/^[[:space:]]*# stdout: /, "")
 
-    content_stdout = content_stdout "\n" render("h3", "💻 Stdout output")
+    content_stdout = content_stdout "\n" render("h3", "🖨 Stdout output")
     content_stdout = content_stdout "\n\n" render("li", $0) "\n"
 }
 
@@ -302,6 +308,7 @@ do_args {
             "\\3()", \
             "g" \
         )
+        doc = doc "\n---\n" #hr sep
         doc = doc "\n" render("h2", func_name) "\n" docblock
         if (toc) {
             url = generate_anchor(func_name)
