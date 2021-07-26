@@ -194,97 +194,97 @@ _process_sh_files() {
 
 }
 
-_generate_toc() {
+# _generate_toc() {
 
-    declare line level title anchor output counter temp_output invalid_chars
+#     declare line level title anchor output counter temp_output invalid_chars
 
-    invalid_chars="'[]/?!:\`.,()*\";{}+=<>~$|#@&–—"
-    while IFS='' read -r line || [[ -n "${line}" ]]; do
-        level="$(echo "${line}" | sed -E 's/(#+).*/\1/; s/#/  /g; s/^  //')"
-        title="$(echo "${line}" | sed -E 's/^#+ //')"
-        [[ "${title}" = "Table of Contents" ]] && continue
+#     invalid_chars="'[]/?!:\`.,()*\";{}+=<>~$|#@&–—"
+#     while IFS='' read -r line || [[ -n "${line}" ]]; do
+#         level="$(echo "${line}" | sed -E 's/(#+).*/\1/; s/#/  /g; s/^  //')"
+#         title="$(echo "${line}" | sed -E 's/^#+ //')"
+#         [[ "${title}" = "Table of Contents" ]] && continue
 
-        # tr does not do OK the lowercase for non ascii chars, add sed to pipeline -> src https://stackoverflow.com/questions/13381746/tr-upper-lower-with-cyrillic-text
-        anchor="$(echo "${title}" | tr '[:upper:] ' '[:lower:]-' | sed 's/[[:upper:]]*/\L&/' | tr -d "${invalid_chars}")"
+#         # tr does not do OK the lowercase for non ascii chars, add sed to pipeline -> src https://stackoverflow.com/questions/13381746/tr-upper-lower-with-cyrillic-text
+#         anchor="$(echo "${title}" | tr '[:upper:] ' '[:lower:]-' | sed 's/[[:upper:]]*/\L&/' | tr -d "${invalid_chars}")"
 
-        # check new line introduced is not duplicated, if is duplicated, introduce a number at the end
-        temp_output=$output"$level- [$title](#$anchor)\n"
-        counter=1
-        while true; do
-            nlines="$(echo -e "${temp_output}" | wc -l)"
-            duplines="$(echo -e "${temp_output}" | sort | uniq | wc -l)"
-            if [ "${nlines}" = "${duplines}" ]; then
-                break
-            fi
-            temp_output=$output"$level- [$title](#$anchor-$counter)\n"
-            counter=$((counter + 1))
-        done
+#         # check new line introduced is not duplicated, if is duplicated, introduce a number at the end
+#         temp_output=$output"$level- [$title](#$anchor)\n"
+#         counter=1
+#         while true; do
+#             nlines="$(echo -e "${temp_output}" | wc -l)"
+#             duplines="$(echo -e "${temp_output}" | sort | uniq | wc -l)"
+#             if [ "${nlines}" = "${duplines}" ]; then
+#                 break
+#             fi
+#             temp_output=$output"$level- [$title](#$anchor-$counter)\n"
+#             counter=$((counter + 1))
+#         done
 
-        output="$temp_output"
+#         output="$temp_output"
 
-        # grep: filter header candidates to be included in toc
-        # sed: remove the ignored headers (case: minlevel greater than one) to avoid unnecessary spacing later in level variable assignment
-    done <<< "$(grep -E "^#{${MINLEVEL},${MAXLEVEL}} " "${1}" | tr -d '\r' | sed "s/^#\{$((MINLEVEL - 1))\}//g")"
+#         # grep: filter header candidates to be included in toc
+#         # sed: remove the ignored headers (case: minlevel greater than one) to avoid unnecessary spacing later in level variable assignment
+#     done <<< "$(grep -E "^#{${MINLEVEL},${MAXLEVEL}} " "${1}" | tr -d '\r' | sed "s/^#\{$((MINLEVEL - 1))\}//g")"
 
-    # when in toc we have two `--` quit one
-    echo "$output"
+#     # when in toc we have two `--` quit one
+#     echo "$output"
 
-}
+# }
 
-_insert_toc_to_file() {
+# _insert_toc_to_file() {
 
-    declare source_markdown toc_text start_toc info_toc end_toc toc_block utext_ampersand utext_slash
-    source_markdown="${1}"
-    toc_text="${2}"
-    start_toc="<!-- START ${SCRIPT_FILE} generated TOC please keep comment here to allow auto update -->"
-    info_toc="<!-- DO NOT EDIT THIS SECTION, INSTEAD RE-RUN ${SCRIPT_FILE} TO UPDATE -->"
-    end_toc="<!-- END ${SCRIPT_FILE} generated TOC please keep comment here to allow auto update -->"
+#     declare source_markdown toc_text start_toc info_toc end_toc toc_block utext_ampersand utext_slash
+#     source_markdown="${1}"
+#     toc_text="${2}"
+#     start_toc="<!-- START ${SCRIPT_FILE} generated TOC please keep comment here to allow auto update -->"
+#     info_toc="<!-- DO NOT EDIT THIS SECTION, INSTEAD RE-RUN ${SCRIPT_FILE} TO UPDATE -->"
+#     end_toc="<!-- END ${SCRIPT_FILE} generated TOC please keep comment here to allow auto update -->"
 
-    toc_block="$start_toc\n$info_toc\n## Table of Contents\n\n$toc_text\n$end_toc"
-    # temporary replace of '/' (confused with separator of substitutions) and '&' (confused with match regex symbol) to run the special sed command
-    utext_ampersand="id8234923000230gzz"
-    utext_slash="id9992384923423gzz"
-    toc_block="${toc_block//\&/${utext_ampersand}}"
-    toc_block="${toc_block//\//${utext_slash}}"
+#     toc_block="$start_toc\n$info_toc\n## Table of Contents\n\n$toc_text\n$end_toc"
+#     # temporary replace of '/' (confused with separator of substitutions) and '&' (confused with match regex symbol) to run the special sed command
+#     utext_ampersand="id8234923000230gzz"
+#     utext_slash="id9992384923423gzz"
+#     toc_block="${toc_block//\&/${utext_ampersand}}"
+#     toc_block="${toc_block//\//${utext_slash}}"
 
-    # search multiline toc block -> https://stackoverflow.com/questions/2686147/how-to-find-patterns-across-multiple-lines-using-grep/2686705
-    # grep color for debugging -> https://superuser.com/questions/914856/grep-display-all-output-but-highlight-search-matches
-    if grep --color=always -Pzl "(?s)${start_toc}.*\n.*${end_toc}" "${source_markdown}" &> /dev/null; then
-        # src https://askubuntu.com/questions/533221/how-do-i-replace-multiple-lines-with-single-word-in-fileinplace-replace
-        sed -i.x ":a;N;\$!ba;s/$start_toc.*$end_toc/$toc_block/g" "${source_markdown}"
-        echo -e "Updated TOC content in ${source_markdown} succesfully\n"
+#     # search multiline toc block -> https://stackoverflow.com/questions/2686147/how-to-find-patterns-across-multiple-lines-using-grep/2686705
+#     # grep color for debugging -> https://superuser.com/questions/914856/grep-display-all-output-but-highlight-search-matches
+#     if grep --color=always -Pzl "(?s)${start_toc}.*\n.*${end_toc}" "${source_markdown}" &> /dev/null; then
+#         # src https://askubuntu.com/questions/533221/how-do-i-replace-multiple-lines-with-single-word-in-fileinplace-replace
+#         sed -i.x ":a;N;\$!ba;s/$start_toc.*$end_toc/$toc_block/g" "${source_markdown}"
+#         echo -e "Updated TOC content in ${source_markdown} succesfully\n"
 
-    # else
-        # sed -i.x 1i"$toc_block" "${source_markdown}"
-        # echo -e "Created TOC in ${source_markdown} succesfully\n"
+#     # else
+#         # sed -i.x 1i"$toc_block" "${source_markdown}"
+#         # echo -e "Created TOC in ${source_markdown} succesfully\n"
 
-    fi
+#     fi
 
-    # undo symbol replacements
-    sed -i.x "s,${utext_ampersand},\&,g" "${source_markdown}"
-    sed -i.x "s,${utext_slash},\/,g" "${source_markdown}"
+#     # undo symbol replacements
+#     sed -i.x "s,${utext_ampersand},\&,g" "${source_markdown}"
+#     sed -i.x "s,${utext_slash},\/,g" "${source_markdown}"
 
-}
+# }
 
-_process_toc() {
-    declare toc_temp_file source_markdown level toc_text
-    source_markdown="${1}"
+# _process_toc() {
+#     declare toc_temp_file source_markdown level toc_text
+#     source_markdown="${1}"
 
-    toc_temp_file=$(_setup_tempfile)
+#     toc_temp_file=$(_setup_tempfile)
 
-    sed '/```/,/```/d' "${source_markdown}" > "${toc_temp_file}"
+#     sed '/```/,/```/d' "${source_markdown}" > "${toc_temp_file}"
 
-    level=$MINLEVEL
-    while [[ $(grep -Ec "^#{$level} " "${toc_temp_file}") -le 1 ]]; do
-        level=$((level + 1))
-    done
+#     level=$MINLEVEL
+#     while [[ $(grep -Ec "^#{$level} " "${toc_temp_file}") -le 1 ]]; do
+#         level=$((level + 1))
+#     done
 
-    MINLEVEL=${level}
-    toc_text=$(_generate_toc "${toc_temp_file}")
-    rm "${toc_temp_file}"
+#     MINLEVEL=${level}
+#     # toc_text=$(_generate_toc "${toc_temp_file}")
+#     rm "${toc_temp_file}"
 
-    _insert_toc_to_file "${source_markdown}" "${toc_text}"
-}
+#     # _insert_toc_to_file "${source_markdown}" "${toc_text}"
+# }
 
 _generate_webdoc() {
     declare dest_dir filename file_basename dest_file_path shdoc_tmp_file is_new_file
@@ -392,7 +392,7 @@ main() {
 
     _setup_arguments "${@}"
     _process_sh_files "${SOURCE_MARKDOWN}" "${SOURCE_SCRIPT_DIR}"
-    _process_toc "${SOURCE_MARKDOWN}"
+    # _process_toc "${SOURCE_MARKDOWN}"
 
     if [[ -n ${WEBDOC} ]]; then
         _process_webdoc_files "${SOURCE_SCRIPT_DIR}" "${WEBDOC_DEST_DIR}"

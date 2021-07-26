@@ -3,6 +3,8 @@
 on mac had to make some changes,  'brew install coreutils' to get the realpath and some tweaks to make it `sed -i.x`
 Still a WIP
 
+[See new style test.md](test.md)
+
 <h1 align="center">Bash Utility</h1>
 
 <p align="center">
