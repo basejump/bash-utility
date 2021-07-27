@@ -8,15 +8,14 @@ Functions for array operations and manipulations.
 
 ### array.contains()
 
-
 Check if item exists in the given array.
 
 #### 🔌 Arguments
 
-- **$1** | (mixed) | Item to search (needle).
-- **$2** | (array) | array to be searched (haystack).
+- **$1** | (string) |  Item to search (needle).
+- **$2** | (array) |  Array to be searched (haystack).
 
-#### 💡 Exit codes
+#### 💡 Return codes
 
 - **0** 🎯 - If successful.
 - **1** 💥 - If no match found in the array.
@@ -25,24 +24,23 @@ Check if item exists in the given array.
 #### Example
 
 ```bash
-array=("a" "b" "c")
-array.contains "c" ${array[@]}
-#Output
-0
+ array=("a" "b" "c")
+ array.contains "c" ${array[@]}
+ #Output
+ 0
 ```
 
 ---
 
 ### array.dedupe()
 
-
 Remove duplicate items from the array.
 
 #### 🔌 Arguments
 
-- **$1** | (array) | Array to be deduped.
+- **$1** | (array) |  Array to be deduped.
 
-#### 💡 Exit codes
+#### 💡 Return codes
 
 - **0** 🎯 - If successful.
 - **2** 💥 - Function missing arguments.
@@ -54,41 +52,39 @@ Remove duplicate items from the array.
 #### Example
 
 ```bash
-array=("a" "b" "a" "c")
-printf "%s" "$(array.dedupe ${array[@]})"
-#Output
-a
-b
-c
+ array=("a" "b" "a" "c")
+ printf "%s" "$(array.dedupe ${array[@]})"
+ #Output
+ a
+ b
+ c
 ```
 
 ---
 
 ### array.is_empty()
 
-
 Check if a given array is empty.
 
 #### 🔌 Arguments
 
-- **$1** | (array) | Array to be checked.
+- **$1** | (array) |  Array to be checked.
 
-#### 💡 Exit codes
+#### 💡 Return codes
 
-- **0** 🎯 If the given array is empty.
-- **2** 💥 If the given array is not empty.
+- **0** 🎯 - If the given array is empty.
+- **2** 💥 - If the given array is not empty.
 
 #### Example
 
 ```bash
-array=("a" "b" "c" "d")
-array.is_empty "${array[@]}"
+  array=("a" "b" "c" "d")
+  array.is_empty "${array[@]}"
 ```
 
 ---
 
 ### array.join()
-
 
 Join array elements with a string.
 the output is a string containing a string representation of all the array elements in the same order,
@@ -97,9 +93,9 @@ with the $2 glue string between each element.
 #### 🔌 Arguments
 
 - **$1** | (string) | String to join the array elements (glue).
-- **$2** | (array) | array to be joined with glue string.
+- **$2** | (array) |  The array to be joined with glue string.
 
-#### 💡 Exit codes
+#### 💡 Return codes
 
 - **0** 🎯 If successful.
 - **2** 💥 Function missing arguments.
@@ -111,27 +107,26 @@ with the $2 glue string between each element.
 #### Example
 
 ```bash
-array=("a" "b" "c" "d")
-printf "%s" "$(array.join "," "${array[@]}")"
-#Output
-a,b,c,d
-printf "%s" "$(array.join "" "${array[@]}")"
-#Output
-abcd
+  array=("a" "b" "c" "d")
+  printf "%s" "$(array.join "," "${array[@]}")"
+  #Output
+  a,b,c,d
+  printf "%s" "$(array.join "" "${array[@]}")"
+  #Output
+  abcd
 ```
 
 ---
 
-### array::reverse()
-
+### array.reverse()
 
 Return an array with elements in reverse order.
 
 #### 🔌 Arguments
 
-- **$1** | (array) | The input array.
+- **$1** | (array) |  The input array.
 
-#### 💡 Exit codes
+#### 💡 Return codes
 
 - **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
@@ -143,26 +138,25 @@ Return an array with elements in reverse order.
 #### Example
 
 ```bash
-array=(1 2 3 4 5)
-printf "%s" "$(array.reverse "${array[@]}")"
-#Output
-5 4 3 2 1
+  array=(1 2 3 4 5)
+  printf "%s" "$(array.reverse "${array[@]}")"
+  #Output
+  5 4 3 2 1
 ```
 
 ---
 
 ### array.random_element()
 
-
 Returns a random item from the array.
 
 #### 🔌 Arguments
 
-- **$1** | (array) | The input array.
+- **$1** | (array) |  The input array.
 
-#### 💡 Exit codes
+#### 💡 Return codes
 
-- **0** 🎯  If successful.
+- **0** 🎯 If successful.
 - **2** 💥 Function missing arguments.
 
 #### 🖨 Stdout output
@@ -172,24 +166,23 @@ Returns a random item from the array.
 #### Example
 
 ```bash
-array=("a" "b" "c" "d")
-printf "%s\n" "$(array.random_element "${array[@]}")"
-#Output
-c
+  array=("a" "b" "c" "d")
+  printf "%s\n" "$(array.random_element "${array[@]}")"
+  #Output
+  c
 ```
 
 ---
 
 ### array.sort()
 
-
 Sort an array from lowest to highest.
 
 #### 🔌 Arguments
 
-- **$1** | (array) | The input array.
+- **$1** | (string) | array The input array.
 
-#### 💡 Exit codes
+#### 💡 Return codes
 
 - **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
@@ -201,29 +194,28 @@ Sort an array from lowest to highest.
 #### Example
 
 ```bash
-sarr=("a c" "a" "d" 2 1 "4 5")
-array.array_sort "${sarr[@]}"
-#Output
-1
-2
-4 5
-a
-a c
-d
+  sarr=("a c" "a" "d" 2 1 "4 5")
+  array.array_sort "${sarr[@]}"
+  #Output
+  1
+  2
+  4 5
+  a
+  a c
+  d
 ```
 
 ---
 
 ### array.rsort()
 
-
 Sort an array in reverse order (highest to lowest).
 
 #### 🔌 Arguments
 
-- **$1** | (array) | The input array.
+- **$1** | (string) | array The input array.
 
-#### 💡 Exit codes
+#### 💡 Return codes
 
 - **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
@@ -235,30 +227,29 @@ Sort an array in reverse order (highest to lowest).
 #### Example
 
 ```bash
-sarr=("a c" "a" "d" 2 1 "4 5")
-array.array_sort "${sarr[@]}"
-#Output
-d
-a c
-a
-4 5
-2
-1
+  sarr=("a c" "a" "d" 2 1 "4 5")
+  array.array_sort "${sarr[@]}"
+  #Output
+  d
+  a c
+  a
+  4 5
+  2
+  1
 ```
 
 ---
 
 ### array.bsort()
 
-
 Bubble sort an integer array from lowest to highest.
 This sort does not work on string array.
 
 #### 🔌 Arguments
 
-- **$1** | (array) | The input array.
+- **$1** | (array) |  The input array.
 
-#### 💡 Exit codes
+#### 💡 Return codes
 
 - **0** 🎯  If successful.
 - **2** 💥 Function missing arguments.
@@ -270,32 +261,31 @@ This sort does not work on string array.
 #### Example
 
 ```bash
-iarr=(4 5 1 3)
-array.bsort "${iarr[@]}"
-#Output
-1
-3
-4
-5
+  iarr=(4 5 1 3)
+  array.bsort "${iarr[@]}"
+  #Output
+  1
+  3
+  4
+  5
 ```
 
 ---
 
-### array::merge()
-
+### array.merge()
 
 Merge two arrays.
 Pass the variable name of the array instead of value of the variable.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | variable name of first array.
-- **$2** | (string) | variable name of second array.
+- **$1** | (string) | string variable name of first array.
+- **$2** | (string) | string variable name of second array.
 
-#### 💡 Exit codes
+#### 💡 Return codes
 
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **0** 🎯 - If successful.
+- **2** 💥 - Function missing arguments.
 
 #### 🖨 Stdout output
 
@@ -304,14 +294,14 @@ Pass the variable name of the array instead of value of the variable.
 #### Example
 
 ```bash
-a=("a" "c")
-b=("d" "c")
-array.merge "a[@]" "b[@]"
-#Output
-a
-c
-d
-c
+  a=("a" "c")
+  b=("d" "c")
+  array.merge "a[@]" "b[@]"
+  #Output
+  a
+  c
+  d
+  c
 ```
 
 
@@ -321,43 +311,32 @@ Helper functions.
 
 ---
 
-### check::command_exists()
+### check.command_exists()
 
 Check if the command exists in the system.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Command name to be searched.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If the command exists.
-- **1** 💥  If the command does not exist.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string Command name to be searched.
 
 #### Example
 
 ```bash
-check::command_exists "tput"
+check.command_exists "tput"
 ```
 
 ---
 
-### check::is_sudo()
+### check.is_sudo()
 
 Check if the script is executed with sudo privilege.
 
 *Function has no arguments.*
 
-#### 💡 Exit codes
-
-- **0** 🎯  If the script is executed with root privilege.
-- **1** 💥  If the script is not executed with root privilege
-
 #### Example
 
 ```bash
-check::is_sudo
+check.is_sudo
 ```
 
 
@@ -374,17 +353,11 @@ Input to the function can be a pipe output, here-string or file.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Iteratee function.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
-- other exitcode returned by iteratee.
+- **$1** | (string) | string Iteratee function.
 
 #### 🖨 Stdout output
 
-- Output of iteratee function.
+-  Output of iteratee function.
 
 #### Example
 
@@ -421,13 +394,7 @@ Input to the function can be a pipe output, here-string or file.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Iteratee function.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If iteratee function fails.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string Iteratee function.
 
 #### Example
 
@@ -445,16 +412,11 @@ Input to the function can be a pipe output, here-string or file.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Iteratee function.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string Iteratee function.
 
 #### 🖨 Stdout output
 
-- array values matching the iteratee function.
+-  array values matching the iteratee function.
 
 #### Example
 
@@ -469,24 +431,10 @@ printf "%s\n" "${arri[@]}" | collection::filter "variable::is_numeric"
 
 ---
 
-### collection::find()
+### 
 
 Iterates over elements of collection, returning the first element where iteratee returns true.
 Input to the function can be a pipe output, here-string or file.
-
-#### 🔌 Arguments
-
-- **$1** | (string) | Iteratee function.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If no match found.
-- **2** 💥 Function missing arguments.
-
-#### 🖨 Stdout output
-
-- first array value matching the iteratee function.
 
 #### Example
 
@@ -495,6 +443,18 @@ arr=("1" "2" "3" "a")
 check_a(){
     [[ "$1" = "a" ]]
 }
+---
+
+### collection::find()
+
+#### 🔌 Arguments
+
+- **$1** | (string) | string Iteratee function.
+
+#### 🖨 Stdout output
+
+-  first array value matching the iteratee function.
+
 printf "%s\n" "${arr[@]}" | collection::find "check_a"
 #Output
 a
@@ -509,17 +469,11 @@ Input to the function can be a pipe output, here-string or file.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Iteratee function.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
-- other exitcode returned by iteratee.
+- **$1** | (string) | string Iteratee function.
 
 #### 🖨 Stdout output
 
-- Output from the iteratee function.
+-  Output from the iteratee function.
 
 #### Example
 
@@ -530,24 +484,10 @@ printf "%s\n" "${opt[@]}" | collection::invoke "ls"
 
 ---
 
-### collection::map()
+### 
 
 Creates an array of values by running each element in array through iteratee.
 Input to the function can be a pipe output, here-string or file.
-
-#### 🔌 Arguments
-
-- **$1** | (string) | Iteratee function.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
-- other exitcode returned by iteratee.
-
-#### 🖨 Stdout output
-
-- Output result of iteratee on value.
 
 #### Example
 
@@ -558,6 +498,18 @@ add_one(){
   i=$(( i + 1 ))
   printf "%s\n" "$i"
 }
+---
+
+### collection::map()
+
+#### 🔌 Arguments
+
+- **$1** | (string) | string Iteratee function.
+
+#### 🖨 Stdout output
+
+-  Output result of iteratee on value.
+
 printf "%s\n" "${arri[@]}" | collection::map "add_one"
 ```
 
@@ -570,16 +522,11 @@ Input to the function can be a pipe output, here-string or file.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Iteratee function.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string Iteratee function.
 
 #### 🖨 Stdout output
 
-- array values not matching the iteratee function.
+-  array values not matching the iteratee function.
 
 #### Example
 
@@ -603,13 +550,7 @@ Input to the function can be a pipe output, here-string or file.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Iteratee function.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If match successful.
-- **1** 💥 If no match found.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string Iteratee function.
 
 #### Example
 
@@ -631,14 +572,9 @@ Get current time in unix timestamp.
 
 *Function has no arguments.*
 
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-
 #### 🖨 Stdout output
 
-- current timestamp.
+-  current timestamp.
 
 #### Example
 
@@ -656,17 +592,11 @@ convert datetime string to unix timestamp.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | date time in any format.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string date time in any format.
 
 #### 🖨 Stdout output
 
-- timestamp for specified datetime.
+-  timestamp for specified datetime.
 
 #### Example
 
@@ -685,18 +615,12 @@ If number of days not specified then it defaults to 1 day.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of days (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of days (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -715,18 +639,12 @@ If number of months not specified then it defaults to 1 month.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of months (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of months (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -745,18 +663,12 @@ If number of years not specified then it defaults to 1 year.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of years (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of years (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -775,18 +687,12 @@ If number of weeks not specified then it defaults to 1 week.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of weeks (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of weeks (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -805,18 +711,12 @@ If number of hours not specified then it defaults to 1 hour.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of hours (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of hours (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -835,18 +735,12 @@ If number of minutes not specified then it defaults to 1 minute.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of minutes (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of minutes (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -865,18 +759,12 @@ If number of seconds not specified then it defaults to 1 second.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of seconds (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of seconds (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -895,16 +783,11 @@ If number of days not specified then it defaults to 1 day.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of days (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$1** | (string) | int number of days (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -923,16 +806,11 @@ If number of months not specified then it defaults to 1 month.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of months (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$1** | (string) | int number of months (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -951,16 +829,11 @@ If number of years not specified then it defaults to 1 year.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of years (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$1** | (string) | int number of years (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -979,16 +852,11 @@ If number of weeks not specified then it defaults to 1 year.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of weeks (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$1** | (string) | int number of weeks (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1007,16 +875,11 @@ If number of hours not specified then it defaults to 1 hour.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of hours (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$1** | (string) | int number of hours (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1035,16 +898,11 @@ If number of minutes not specified then it defaults to 1 minute.
 
 #### 🔌 Arguments
 
-- **$2** | (int) | number of minutes (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$2** | (string) | int number of minutes (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1063,16 +921,11 @@ If number of seconds not specified then it defaults to 1 second.
 
 #### 🔌 Arguments
 
-- **$2** | (int) | number of seconds (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$2** | (string) | int number of seconds (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1091,18 +944,12 @@ If number of days not specified then it defaults to 1 day.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of days (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of days (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1121,18 +968,12 @@ If number of months not specified then it defaults to 1 month.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of months (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of months (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1151,18 +992,12 @@ If number of years not specified then it defaults to 1 year.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of years (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of years (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1181,18 +1016,12 @@ If number of weeks not specified then it defaults to 1 week.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of weeks (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of weeks (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1211,18 +1040,12 @@ If number of hours not specified then it defaults to 1 hour.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of hours (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of hours (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1241,18 +1064,12 @@ If number of minutes not specified then it defaults to 1 minute.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of minutes (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of minutes (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1271,18 +1088,12 @@ If number of seconds not specified then it defaults to 1 second.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (int) | number of seconds (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | int number of seconds (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1301,16 +1112,11 @@ If number of days not specified then it defaults to 1 day.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of days (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$1** | (string) | int number of days (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1329,16 +1135,11 @@ If number of months not specified then it defaults to 1 month.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of months (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$1** | (string) | int number of months (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1357,16 +1158,11 @@ If number of years not specified then it defaults to 1 year.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of years (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$1** | (string) | int number of years (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1385,16 +1181,11 @@ If number of weeks not specified then it defaults to 1 week.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of weeks (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$1** | (string) | int number of weeks (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1413,16 +1204,11 @@ If number of hours not specified then it defaults to 1 hour.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of hours (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$1** | (string) | int number of hours (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1441,16 +1227,11 @@ If number of minutes not specified then it defaults to 1 minute.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of minutes (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$1** | (string) | int number of minutes (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1469,16 +1250,11 @@ If number of seconds not specified then it defaults to 1 second.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of seconds (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate timestamp.
+- **$1** | (string) | int number of seconds (optional).
 
 #### 🖨 Stdout output
 
-- timestamp.
+-  timestamp.
 
 #### Example
 
@@ -1497,18 +1273,12 @@ If format string is not specified then it defaults to "yyyy-mm-dd hh:mm:ss" form
 
 #### 🔌 Arguments
 
-- **$1** | (int) | unix timestamp.
-- **$2** | (string) | format control characters based on `date` command (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If unable to generate time string.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int unix timestamp.
+- **$2** | (string) | string format control characters based on `date` command (optional).
 
 #### 🖨 Stdout output
 
-- formatted time string.
+-  formatted time string.
 
 #### Example
 
@@ -1532,11 +1302,11 @@ Pass the variable name of the array instead of value of the variable.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | variable name of the array.
+- **$1** | (string) | string variable name of the array.
 
 #### 🖨 Stdout output
 
-- Formatted key value of array.
+-  Formatted key value of array.
 
 #### Example
 
@@ -1567,11 +1337,11 @@ This function helps debug ansi escape sequence in text by displaying the escape 
 
 #### 🔌 Arguments
 
-- **$1** | (string) | input with ansi escape sequence.
+- **$1** | (string) | string input with ansi escape sequence.
 
 #### 🖨 Stdout output
 
-- Ansi escape sequence printed in output as is.
+-  Ansi escape sequence printed in output as is.
 
 #### Example
 
@@ -1596,14 +1366,9 @@ Function creates temporary file with random name. The temporary file will be del
 
 *Function has no arguments.*
 
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If failed to create temp file.
-
 #### 🖨 Stdout output
 
-- file name of temporary file created.
+-  file name of temporary file created.
 
 #### Example
 
@@ -1622,18 +1387,12 @@ Function creates temporary directory with random name. The temporary directory w
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Temporary directory prefix
-- **$2** | (string) | Flag to auto remove directory on exit trap (true)
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If failed to create temp directory.
-- **2** 💥 Missing arguments.
+- **$1** | (string) | string Temporary directory prefix
+- **$2** | (string) | string Flag to auto remove directory on exit trap (true)
 
 #### 🖨 Stdout output
 
-- directory name of temporary directory created.
+-  directory name of temporary directory created.
 
 #### Example
 
@@ -1651,16 +1410,11 @@ Get only the filename from string path.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | path.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string path.
 
 #### 🖨 Stdout output
 
-- name of the file with extension.
+-  name of the file with extension.
 
 #### Example
 
@@ -1678,16 +1432,11 @@ Get the basename of file from file name.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | path.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string path.
 
 #### 🖨 Stdout output
 
-- basename of the file.
+-  basename of the file.
 
 #### Example
 
@@ -1705,17 +1454,11 @@ Get the extension of file from file name.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | path.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥 If no extension is found in the filename.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string path.
 
 #### 🖨 Stdout output
 
-- extension of the file.
+-  extension of the file.
 
 #### Example
 
@@ -1733,16 +1476,11 @@ Get directory name from file path.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | path.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string path.
 
 #### 🖨 Stdout output
 
-- directory path.
+-  directory path.
 
 #### Example
 
@@ -1760,17 +1498,11 @@ Get absolute path of file or directory.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | relative or absolute path to file/direcotry.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥  If file/directory does not exist.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string relative or absolute path to file/direcotry.
 
 #### 🖨 Stdout output
 
-- Absolute path to file/directory.
+-  Absolute path to file/directory.
 
 #### Example
 
@@ -1788,18 +1520,11 @@ Get mime type of provided input.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | relative or absolute path to file/directory.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **1** 💥  If file/directory does not exist.
-- **2** 💥 Function missing arguments.
-- **3** 💥 If file or mimetype command not found in system.
+- **$1** | (string) | string relative or absolute path to file/directory.
 
 #### 🖨 Stdout output
 
-- mime type of file/directory.
+-  mime type of file/directory.
 
 #### Example
 
@@ -1807,6 +1532,26 @@ Get mime type of provided input.
 file::mime_type "../src/file.sh"
 #Output
 application/x-shellscript
+```
+
+---
+
+### file::contains_text()
+
+Search if a given pattern is found in file.
+
+#### 🔌 Arguments
+
+- **$1** | (string) | string relative or absolute path to file/directory.
+- **$2** | (string) | string search key or regular expression.
+
+#### Example
+
+```bash
+file::contains_text "./file.sh" "^[ @[:alpha:]]*"
+file::contains_text "./file.sh" "@file"
+#Output
+0
 ```
 
 
@@ -1818,19 +1563,15 @@ Functions to format provided input.
 
 ### format::human_readable_seconds()
 
+Format seconds to human readable format.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | number of seconds.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int number of seconds.
 
 #### 🖨 Stdout output
 
-- formatted time string.
+-  formatted time string.
 
 #### Example
 
@@ -1848,16 +1589,11 @@ Format bytes to human readable format.
 
 #### 🔌 Arguments
 
-- **$1** | (int) | size in bytes.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | int size in bytes.
 
 #### 🖨 Stdout output
 
-- formatted file size string.
+-  formatted file size string.
 
 #### Example
 
@@ -1875,15 +1611,11 @@ Remove Ansi escape sequences from given text.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Input text to be ansi stripped.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
+- **$1** | (string) | string Input text to be ansi stripped.
 
 #### 🖨 Stdout output
 
-- Ansi stripped text.
+-  Ansi stripped text.
 
 #### Example
 
@@ -1901,17 +1633,12 @@ Prints the given text to centre of terminal.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Text to be printed.
-- **$2** | (string) | Filler symbol to be added to prefix and suffix of the text (optional). Defaults to space as filler.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string Text to be printed.
+- **$2** | (string) | string Filler symbol to be added to prefix and suffix of the text (optional). Defaults to space as filler.
 
 #### 🖨 Stdout output
 
-- formatted text.
+-  formatted text.
 
 #### Example
 
@@ -1927,17 +1654,12 @@ Format String to print beautiful report.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Text to be printed on the left.
-- **$2** | (string) | Text to be printed within the square brackets.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string Text to be printed on the left.
+- **$2** | (string) | string Text to be printed within the square brackets.
 
 #### 🖨 Stdout output
 
-- formatted text.
+-  formatted text.
 
 #### Example
 
@@ -1955,17 +1677,12 @@ Trim given text to width of the terminal window.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Text of first sentence.
-- **$2** | (string) | Text of second sentence (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string Text of first sentence.
+- **$2** | (string) | string Text of second sentence (optional).
 
 #### 🖨 Stdout output
 
-- trimmed text.
+-  trimmed text.
 
 #### Example
 
@@ -1988,14 +1705,8 @@ Prompt yes or no question to the user.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | The question to be prompted to the user.
-- **$2** | (string) | default answer \[yes/no\] (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If user responds with yes.
-- **1** 💥  If user responds with no.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string The question to be prompted to the user.
+- **$2** | (string) | string default answer \[yes/no\] (optional).
 
 #### Example
 
@@ -2013,17 +1724,12 @@ Prompt question to the user.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | The question to be prompted to the user.
-- **$2** | (string) | default answer (optional).
-
-#### 💡 Exit codes
-
-- **0** 🎯  If user responds with answer.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string The question to be prompted to the user.
+- **$2** | (string) | string default answer (optional).
 
 #### 🖨 Stdout output
 
-- User entered answer to the question.
+-  User entered answer to the question.
 
 #### Example
 
@@ -2038,6 +1744,30 @@ Choose directory to install? [/home/path]
 
 Simple json manipulation. These functions does not completely replace `jq` in any way.
 
+---
+
+### json::get_value()
+
+Extract value from json based on key and position.
+Input to the function can be a pipe output, here-string or file.
+
+#### 🔌 Arguments
+
+- **$1** | (string) | string id of the field to fetch.
+- **$2** | (string) | int position of value to extract.Defaults to 1.(optional)
+
+#### 🖨 Stdout output
+
+-  string value of extracted key.
+
+#### Example
+
+```bash
+json::get_value "id" "1" < json_file
+json::get_value "id" <<< "${json_var}"
+echo "{\"data\":{\"id\":\"123\",\"value\":\"name string\"}}" | json::get_value "id"
+```
+
 
 ## Miscellaneous
 
@@ -2050,11 +1780,6 @@ Set of miscellaneous helper functions.
 Check if internet connection is available.
 
 *Function has no arguments.*
-
-#### 💡 Exit codes
-
-- **0** 🎯  If script can connect to internet.
-- **1** 💥 If script cannot access internet.
 
 #### Example
 
@@ -2070,16 +1795,11 @@ Get list of process ids based on process name.
 
 #### 🔌 Arguments
 
-- **$1** | (Name) | of the process to search.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If match successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | Name of the process to search.
 
 #### 🖨 Stdout output
 
-- list of process ids.
+-  list of process ids.
 
 #### Example
 
@@ -2100,16 +1820,11 @@ Get user id based on username.
 
 #### 🔌 Arguments
 
-- **$1** | (username) | to search.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If match successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | username to search.
 
 #### 🖨 Stdout output
 
-- string uid for the username.
+-  string uid for the username.
 
 #### Example
 
@@ -2127,13 +1842,9 @@ Generate random uuid.
 
 *Function has no arguments.*
 
-#### 💡 Exit codes
-
-- **0** 🎯  If match successful.
-
 #### 🖨 Stdout output
 
-- random generated uuid.
+-  random generated uuid.
 
 #### Example
 
@@ -2156,14 +1867,9 @@ Identify the OS the function is run on.
 
 *Function has no arguments.*
 
-#### 💡 Exit codes
-
-- **0** 🎯  If OS is successfully detected.
-- **1** 💥 If unable to detect OS.
-
 #### 🖨 Stdout output
 
-- Operating system name (linux, mac or windows).
+-  Operating system name (linux, mac or windows).
 
 #### Example
 
@@ -2181,14 +1887,9 @@ Identify the distribution flavour of linux.
 
 *Function has no arguments.*
 
-#### 💡 Exit codes
-
-- **0** 🎯  If Linux distro is successfully detected.
-- **1** 💥 If unable to detect OS distro.
-
 #### 🖨 Stdout output
 
-- Linux OS distribution name (ubuntu, debian, suse, etc.,).
+-  Linux OS distribution name (ubuntu, debian, suse, etc.,).
 
 #### Example
 
@@ -2206,14 +1907,9 @@ Identify the Linux version.
 
 *Function has no arguments.*
 
-#### 💡 Exit codes
-
-- **0** 🎯  If Linux version is successfully detected.
-- **1** 💥 If unable to detect Linux version.
-
 #### 🖨 Stdout output
 
-- Linux OS version number (18.04, 20.04, etc.,).
+-  Linux OS version number (18.04, 20.04, etc.,).
 
 #### Example
 
@@ -2223,6 +1919,26 @@ os::detect_linux_version
 20.04
 ```
 
+---
+
+### os::detect_mac_version()
+
+Identify the MacOS version.
+
+*Function has no arguments.*
+
+#### 🖨 Stdout output
+
+-  MacOS version number (10.15.6, etc.,)
+
+#### Example
+
+```bash
+os::detect_linux_version
+#Output
+10.15.7
+```
+
 
 ## String
 
@@ -2230,22 +1946,17 @@ Functions for string operations and manipulations.
 
 ---
 
-### string::trim()
+### string.trim()
 
 Strip whitespace from the beginning and end of a string.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | The string to be trimmed.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string The string to be trimmed.
 
 #### 🖨 Stdout output
 
-- The trimmed string.
+-  The trimmed string.
 
 #### Example
 
@@ -2257,23 +1968,18 @@ Hello World!
 
 ---
 
-### string::split()
+### string.split()
 
 Split a string to array by a delimiter.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | The input string.
-- **$2** | (string) | The delimiter string.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string The input string.
+- **$2** | (string) | string The delimiter string.
 
 #### 🖨 Stdout output
 
-- Returns an array of strings created by splitting the string parameter by the delimiter.
+-  Returns an array of strings created by splitting the string parameter by the delimiter.
 
 #### Example
 
@@ -2287,23 +1993,18 @@ World
 
 ---
 
-### string::lstrip()
+### string.lstrip()
 
 Strip characters from the beginning of a string.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | The input string.
-- **$2** | (string) | The characters you want to strip.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string The input string.
+- **$2** | (string) | string The characters you want to strip.
 
 #### 🖨 Stdout output
 
-- Returns the modified string.
+-  Returns the modified string.
 
 #### Example
 
@@ -2315,23 +2016,18 @@ llo World!
 
 ---
 
-### string::rstrip()
+### string.rstrip()
 
 Strip characters from the end of a string.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | The input string.
-- **$2** | (string) | The characters you want to strip.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string The input string.
+- **$2** | (string) | string The characters you want to strip.
 
 #### 🖨 Stdout output
 
-- Returns the modified string.
+-  Returns the modified string.
 
 #### Example
 
@@ -2343,22 +2039,17 @@ Hello Worl
 
 ---
 
-### string::to_lower()
+### string.to_lower()
 
 Make a string lowercase.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | The input string.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string The input string.
 
 #### 🖨 Stdout output
 
-- Returns the lowercased string.
+-  Returns the lowercased string.
 
 #### Example
 
@@ -2376,16 +2067,11 @@ Make a string all uppercase.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | The input string.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If successful.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string The input string.
 
 #### 🖨 Stdout output
 
-- Returns the uppercased string.
+-  Returns the uppercased string.
 
 #### Example
 
@@ -2403,14 +2089,8 @@ Check whether the search string exists within the input string.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | The input string.
-- **$2** | (string) | The search key.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If match found.
-- **1** 💥  If no match found.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string The input string.
+- **$2** | (string) | string The search key.
 
 #### Example
 
@@ -2426,14 +2106,8 @@ Check whether the input string starts with key string.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | The input string.
-- **$2** | (string) | The search key.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If match found.
-- **1** 💥  If no match found.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string The input string.
+- **$2** | (string) | string The search key.
 
 #### Example
 
@@ -2449,14 +2123,8 @@ Check whether the input string ends with key string.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | The input string.
-- **$2** | (string) | The search key.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If match found.
-- **1** 💥  If no match found.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string The input string.
+- **$2** | (string) | string The search key.
 
 #### Example
 
@@ -2472,14 +2140,8 @@ Check whether the input string matches the given regex.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | The input string.
-- **$2** | (string) | The search key.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If match found.
-- **1** 💥  If no match found.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string The input string.
+- **$2** | (string) | string The search key.
 
 #### Example
 
@@ -2500,11 +2162,6 @@ Check if script is run in terminal.
 
 *Function has no arguments.*
 
-#### 💡 Exit codes
-
-- **0** 🎯  If script is run on terminal.
-- **1** 💥 If script is not run on terminal.
-
 ---
 
 ### terminal::detect_profile()
@@ -2513,14 +2170,24 @@ Detect profile rc file for zsh and bash of current script running user.
 
 *Function has no arguments.*
 
-#### 💡 Exit codes
+#### 🖨 Stdout output
 
-- **0** 🎯  If script is run on terminal.
-- **1** 💥 If script is not run on terminal.
+-  path to the profile file.
+
+---
+
+### terminal::clear_line()
+
+Clear the output in terminal on the specified line number.
+This function clears line only on terminal.
+
+#### 🔌 Arguments
+
+- **$1** | (string) | Line number to clear. Defaults to 1. (optional)
 
 #### 🖨 Stdout output
 
-- path to the profile file.
+-  clear line ansi code.
 
 
 ## Validation
@@ -2535,13 +2202,7 @@ Validate whether a given input is a valid email address or not.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | input email address to validate.
-
-#### 💡 Exit codes
-
-- # @exitcodes
-- **1** 💥  If provided input is not an email address.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string input email address to validate.
 
 #### Example
 
@@ -2561,13 +2222,7 @@ Validate whether a given input is a valid IP V4 address.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | input IPv4 address.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If provided input is a valid IPv4.
-- **1** 💥  If provided input is not a valid IPv4.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string input IPv4 address.
 
 #### Example
 
@@ -2609,13 +2264,7 @@ Validate whether a given input is a valid IP V6 address.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | input IPv6 address.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If provided input is a valid IPv6.
-- **1** 💥  If provided input is not a valid IPv6.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string input IPv6 address.
 
 #### Example
 
@@ -2651,13 +2300,7 @@ Validate if given variable is entirely alphabetic characters.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Value of variable to validate.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If input is only alpha characters.
-- **1** 💥 If input contains any non alpha characters.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string Value of variable to validate.
 
 #### Example
 
@@ -2677,13 +2320,7 @@ Check if given variable contains only alpha-numeric characters.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Value of variable to validate.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If input is an alpha-numeric.
-- **1** 💥 If input is not an alpha-numeric.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string Value of variable to validate.
 
 #### Example
 
@@ -2703,13 +2340,7 @@ Validate if given variable contains only alpha-numeric characters, as well as da
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Value of variable to validate.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If input is valid.
-- **1** 💥 If input the input is not valid.
-- **2** 💥 Function missing arguments.
+- **$1** | (string) | string Value of variable to validate.
 
 #### Example
 
@@ -2729,15 +2360,7 @@ Compares version numbers and provides return based on whether the value in equal
 
 #### 🔌 Arguments
 
-- **$1** | (string) | Version number to check (eg: 1.0.1)
-
-#### 💡 Exit codes
-
-- **0** 🎯 version number is equal.
-- **1** 💥 $1 version number is greater than $2.
-- **2** 💥 $1 version number is less than $2.
-- **3** 💥 Function is missing required arguments.
-- **4** 💥 Provided input argument is in invalid format.
+- **$1** | (string) | string Version number to check (eg: 1.0.1)
 
 #### Example
 
@@ -2763,12 +2386,7 @@ Pass the variable name instead of value of the variable.
 
 #### 🔌 Arguments
 
-- **$1** | (string) | name of the variable to check.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If input is array.
-- **1** 💥 If input is not an array.
+- **$1** | (string) | string name of the variable to check.
 
 #### Example
 
@@ -2787,12 +2405,7 @@ Check if given variable is a number.
 
 #### 🔌 Arguments
 
-- **$1** | (mixed) | Value of variable to check.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If input is number.
-- **1** 💥 If input is not a number.
+- **$1** | (string) | mixed Value of variable to check.
 
 #### Example
 
@@ -2810,12 +2423,7 @@ Check if given variable is an integer.
 
 #### 🔌 Arguments
 
-- **$1** | (mixed) | Value of variable to check.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If input is an integer.
-- **1** 💥 If input is not an integer.
+- **$1** | (string) | mixed Value of variable to check.
 
 #### Example
 
@@ -2833,12 +2441,7 @@ Check if given variable is a float.
 
 #### 🔌 Arguments
 
-- **$1** | (mixed) | Value of variable to check.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If input is a float.
-- **1** 💥 If input is not a float.
+- **$1** | (string) | mixed Value of variable to check.
 
 #### Example
 
@@ -2856,12 +2459,7 @@ Check if given variable is a boolean.
 
 #### 🔌 Arguments
 
-- **$1** | (mixed) | Value of variable to check.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If input is a boolean.
-- **1** 💥 If input is not a boolean.
+- **$1** | (string) | mixed Value of variable to check.
 
 #### Example
 
@@ -2879,12 +2477,7 @@ Check if given variable is a true.
 
 #### 🔌 Arguments
 
-- **$1** | (mixed) | Value of variable to check.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If input is true.
-- **1** 💥 If input is not true.
+- **$1** | (string) | mixed Value of variable to check.
 
 #### Example
 
@@ -2902,17 +2495,31 @@ Check if given variable is false.
 
 #### 🔌 Arguments
 
-- **$1** | (mixed) | Value of variable to check.
-
-#### 💡 Exit codes
-
-- **0** 🎯  If input is false.
-- **1** 💥 If input is not false.
+- **$1** | (string) | mixed Value of variable to check.
 
 #### Example
 
 ```bash
 variable::is_false "false"
+#Output
+0
+```
+
+---
+
+### variable::is_empty_or_null()
+
+Check if given variable is empty or null.
+
+#### 🔌 Arguments
+
+- **$1** | (string) | mixed Value of variable to check.
+
+#### Example
+
+```bash
+test=''
+variable::is_empty_or_null $test
 #Output
 0
 ```

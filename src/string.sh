@@ -16,7 +16,7 @@
 # @exitcode 2 Function missing arguments.
 #
 # @stdout The trimmed string.
-string::trim() {
+string.trim() {
     [[ $# = 0 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
 
     : "${1#"${1%%[![:space:]]*}"}"
@@ -40,7 +40,7 @@ string::trim() {
 # @exitcode 2 Function missing arguments.
 #
 # @stdout Returns an array of strings created by splitting the string parameter by the delimiter.
-string::split() {
+string.split() {
     [[ $# -lt 2 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     declare -a arr=()
     IFS=$'\n' read -d "" -ra arr <<< "${1//$2/$'\n'}"
@@ -61,7 +61,7 @@ string::split() {
 # @exitcode 2 Function missing arguments.
 #
 # @stdout Returns the modified string.
-string::lstrip() {
+string.lstrip() {
     [[ $# -lt 2 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     printf '%s\n' "${1##$2}"
 }
@@ -80,7 +80,7 @@ string::lstrip() {
 # @exitcode 2 Function missing arguments.
 #
 # @stdout Returns the modified string.
-string::rstrip() {
+string.rstrip() {
     [[ $# -lt 2 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     printf '%s\n' "${1%%$2}"
 }
@@ -98,7 +98,7 @@ string::rstrip() {
 # @exitcode 2 Function missing arguments.
 #
 # @stdout Returns the lowercased string.
-string::to_lower() {
+string.to_lower() {
     [[ $# = 0 ]] && printf "%s: Missing arguments\n" "${FUNCNAME[0]}" && return 2
     if [[ ${BASH_VERSINFO:-0} -ge 4 ]]; then
         printf '%s\n' "${1,,}"

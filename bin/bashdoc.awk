@@ -36,9 +36,12 @@ BEGIN {
 
     styles["/code", "to"] = "```"
 
-    styles["argN", "from"] = "^(\\$[0-9])[ -]*\\(?+(\\w+)\\)?+"
-    styles["argN", "to"] = "**\\1** | (\\2) |"
+    styles["argN", "from"] = "^(\\$[0-9])[ -]*\\{?+(\\w+)\\}?+"
+    styles["argN", "to"] = "**\\1** | (\\2) | "
     # styles["argN", "to"] = "**\\1** | (\\2) | "
+
+    styles["argN_notype", "from"] = "^(\\$[0-9])[ -]*"
+    styles["argN_notype", "to"] = "**\\1** | (string) | "
 
     styles["arg@", "from"] = "^\\$@ (\\S+)"
     styles["arg@", "to"] = "**...** (\\1):"
@@ -53,11 +56,11 @@ BEGIN {
     styles["anchor", "from"] = ".*"
     styles["anchor", "to"] = "[&](#&)"
 
-    styles["exitcode", "from"] = "([>!]?[1-9]{1,3}) (.*)"
-    styles["exitcode", "to"] = "**\\1** 💥 \\2"
+    styles["returncode", "from"] = "([>!]?[1-9]{1,3}) (.*)"
+    styles["returncode", "to"] = "**\\1** 💥 \\2"
 
-    styles["exitcode0", "from"] = "([>!]?[0]{1}) (.*)"
-    styles["exitcode0", "to"] = "**0** 🎯 \\2"
+    styles["returncode0", "from"] = "([>!]?[0]{1}) (.*)"
+    styles["returncode0", "to"] = "**0** 🎯 \\2"
 
     styles["h_rule", "to"] = "---"
 
@@ -112,14 +115,14 @@ function generate_anchor(text) {
 function reset() {
     has_example = 0
     has_args_heading = 0
-    has_exitcode = 0
+    has_return_code = 0
     has_stdout = 0
 
     content_function_name = ""
     content_desc = ""
     content_example  = ""
     content_args = ""
-    content_exitcode = ""
+    content_returncode = ""
     content_seealso = ""
     content_stdout = ""
 }
@@ -134,12 +137,12 @@ function description_start() {
 #     prev_line=$0
 # }
 
-/^[[:space:]]*# @internal/ {
+/^\s*# (@internal|@ignore)/ {
     is_internal = 1
 }
 
-/^[[:space:]]*# @file/ {
-    sub(/^[[:space:]]*# @file /, "")
+/^\s*# (@file|@module)/ {
+    sub(/^\s*# (@file|@module):?\s*/, "")
 
     filedoc = "\n" render("h1", $0) "\n"
     if(style == "webdoc"){
@@ -148,8 +151,8 @@ function description_start() {
 
 }
 
-/^[[:space:]]*# @brief/ {
-    sub(/^[[:space:]]*# @brief /, "")
+/^\s*# (@brief|@summary)/ {
+    sub(/^\s*# (@brief|@summary):?\s*/, "")
     if(style == "webdoc"){
         filedoc = filedoc render("comment", "brief=" $0) "\n"
     }
@@ -157,67 +160,96 @@ function description_start() {
 }
 
 # Description
-/^[[:space:]]*# @description/ {
+/^\s*# @description/ {
     description_start()
+
 }
 
 # Description start with #---
-/^[[:space:]]*#\s*-{3}/ {
+/^\s*#\s*-{3}/ {
     description_start()
 }
 
 # function docs start with ##
-/^[[:space:]]*#\s?#/ {
+/^\s*#\s?#/ {
     description_start()
 }
 
 in_description {
     # any one of these will stop the decription flow.
     # not a `# `, any `# @` thats not a @desc, any `# example` and any line thats not a `# ` comment
-    if (/^[^[[:space:]]*#]/ || /^[[:space:]]*# @[^d]/ || /^[[:space:]]*# example/ || /^[[:space:]]*[^#]/) {
+    if (/^[^\s*#]/ || /^\s*# @[^d]/ || /^\s*# example/ || /^\s*# [\`]{3}/ || /^\s*[^#]/) {
         if (!match(content_desc, /\n$/)) {
             content_desc = content_desc "\n"
         }
         in_description = 0
-    } else {
-        sub(/^[[:space:]]*# @description /, "")
-        sub(/^\s*#\s*-{3,}[[:space:]]*/, "")
-        sub(/^[[:space:]]*# /, "")
-        sub(/^[[:space:]]*#\s?#/, "")
-        sub(/^[[:space:]]*#$/, "")
+    }
+    else {
+        sub(/^\s*# @description\s*/, "")
+        sub(/^\s*#\s*-{3,}\s*/, "")
+        sub(/^\s*# /, "")
+        sub(/^\s*#\s?#/, "")
+        sub(/^\s*#$/, "")
 
-        content_desc = content_desc "\n" $0
+        if($0) {
+            content_desc = content_desc "\n" $0
+        }
     }
 }
 
 in_example {
 
-    if (! /^[[:space:]]*#[ ]{3}/) {
+    if (! /^\s*#[ ]{3}/) {
 
         in_example = 0
 
         content_example = content_example "\n" render("/code") "\n"
 
     } else {
-        sub(/^[[:space:]]*#[ ]{3}/, "")
+        sub(/^\s*#[ ]{3}/, "")
+
+        content_example = content_example "\n" $0
+    }
+}
+
+in_example_code_block {
+
+    if (/^\s*#\s*[\`]{3}/) {
+        # whack it so it doesn't get picked up again
+        sub(/^\s*#\s*[\`]{3}/, "")
+
+        in_example_code_block = 0
+
+        content_example = content_example "\n" render("/code") "\n"
+
+    } else {
+        sub(/^\s*#\s/, "")
 
         content_example = content_example "\n" $0
     }
 }
 
 # Example @example
-/^[[:space:]]*# @?example/ {
+/^\s*# @?example/ {
     in_example = 1
     content_example = content_example "\n" render("h3", "Example")
     content_example = content_example "\n\n" render("code", "bash")
 }
 
-/^[[:space:]]*# @arg/ {
-    do_args = 1
+# Example code block
+/^\s*# [\`]{3}/ {
+    in_example_code_block = 1
+    content_example = content_example "\n" render("h3", "Example")
+    content_example = content_example "\n\n" render("code", "bash")
 }
 
-# args in form # $1 -
-/^[[:space:]]*# \$[1-9]/ {
+/^\s*# (@arg|@param)/ {
+    do_args = 1
+    sub(/^\s*#\s*(@arg|@param)\s*/, "")
+}
+
+# args in form # $1 - without param or arg
+/^\s*# \$[1-9]/ {
     do_args = 1
 }
 
@@ -226,82 +258,85 @@ do_args {
         has_args_heading = 1
         content_args = content_args "\n" render("h3", "🔌 Arguments") "\n\n"
     }
-    sub(/^[[:space:]]*#\s*@arg\s*/, "")
-    sub(/^[[:space:]]*# /, "")
-    $0 = render("argN", $0)
+
+    sub(/^\s*#\s*/, "") # remove the line start
+
+    if(match($0, /\{\w+\}/)) {
+        $0 = render("argN", $0)
+    } else {
+        # evrything wants to be a string in bash
+        $0 = render("argN_notype", $0)
+    }
+    # $0 = render("argN", $0)
     # $0 = render("arg@", $0)
     content_args = content_args render("li", $0) "\n"
     do_args = 0
 }
 
 
-/^[[:space:]]*# @noargs/ {
+/^\s*# @noargs/ {
     content_args = content_args "\n" render("i", "Function has no arguments.") "\n"
 }
 
-in_exitcodes {
+in_return_codes {
 
     # for any line thats a pound and a number `# 0-9`
-    if (/^[[:space:]]*#\s*[0-9]/) {
-        sub(/^[[:space:]]*#\s*/, "")
-        $0 = render("exitcode0", $0)
-        $0 = render("exitcode", $0)
-        content_exitcode = content_exitcode render("li", $0) "\n"
+    if (/^\s*#\s*[0-9]/) {
+        sub(/^\s*#\s*/, "")
+        $0 = render("returncode0", $0)
+        $0 = render("returncode", $0)
+        content_returncode = content_returncode render("li", $0) "\n"
     } else {
         # break out on anything else
-        in_exitcodes = 0
+        in_return_codes = 0
     }
 }
 
-/^[[:space:]]*# exitcodes/ {
-    if (!has_exitcode) {
-        has_exitcode = 1
-        content_exitcode = content_exitcode "\n" render("h3", "💡 Exit codes") "\n\n"
+# @return with lines below it
+/^\s*# @return[s]?\s*$/ {
+    if (!has_return_code) {
+        has_return_code = 1
+        content_returncode = content_returncode "\n" render("h3", "💡 Return codes") "\n\n"
     }
-    in_exitcodes = 1
-    # sub(/^[[:space:]]*# @exitcode /, "")
-
-    # $0 = render("exitcode0", $0)
-    # $0 = render("exitcode", $0)
-
-    # content_exitcode = content_exitcode render("li", $0) "\n"
+    in_return_codes = 1
 }
 
-/^[[:space:]]*# @exitcode/ {
-    if (!has_exitcode) {
-        has_exitcode = 1
+# @return(s) with description inline
+/^\s*# @return[s]?\s+\w+/ {
+    if (!has_return_code) {
+        has_return_code = 1
 
-        content_exitcode = content_exitcode "\n" render("h3", "💡 Exit codes") "\n\n"
+        content_returncode = content_returncode "\n" render("h3", "💡 Return codes") "\n\n"
     }
 
-    sub(/^[[:space:]]*# @exitcode /, "")
+    sub(/^\s*# @return[s]?\s+/, "")
 
-    $0 = render("exitcode0", $0)
-    $0 = render("exitcode", $0)
+    $0 = render("returncode0", $0)
+    $0 = render("returncode", $0)
 
-    content_exitcode = content_exitcode render("li", $0) "\n"
+    content_returncode = content_returncode render("li", $0) "\n"
 }
 
-/^[[:space:]]*# @see/ {
-    sub(/[[:space:]]*# @see /, "")
+/^\s*# @see/ {
+    sub(/\s*# @see /, "")
     anchor = generate_anchor($0)
     $0 = render_list($0, anchor)
 
     content_seealso = content_seealso "\n" render("h3", "See also") "\n\n" $0 "\n"
 }
 
-/^[[:space:]]*# @stdout/ || /^[[:space:]]*# stdout:/ {
+/^\s*# (@stdout|stdout:)/ {
     has_stdout = 1
 
-    sub(/^[[:space:]]*# @stdout /, "")
-    sub(/^[[:space:]]*# stdout:/, "")
+    sub(/^\s*# (@stdout|stdout:)/, "")
+    # sub(/^\s*# stdout:/, "")
 
     content_stdout = content_stdout "\n" render("h3", "🖨 Stdout output")
     content_stdout = content_stdout "\n\n" render("li", $0) "\n"
 }
 
 {
-    docblock = content_desc content_args content_exitcode content_stdout content_example content_seealso
+    docblock = content_desc content_args content_returncode content_stdout content_example content_seealso
     if(style == "webdoc"){
         docblock = docblock "\n" render("h_rule") "\n"
     }
@@ -309,10 +344,10 @@ in_exitcodes {
 }
 
 # function start
-/^[ \t]*(function([ \t])+)?([a-zA-Z0-9_:-]+)([ \t]*)(\(([ \t]*)\))?[ \t]*\{/ && docblock != "" && !in_example {
+/^[ \t]*(function([ \t])+)?([a-zA-Z0-9\._:-]+)([ \t]*)(\(([ \t]*)\))?[ \t]*\{/ && docblock != "" && !in_example {
 
     content_function_name = gensub(\
-        /^[ \t]*(function([ \t])+)?([a-zA-Z0-9_:-]+)[ \t]*\(.*/, \
+        /^[ \t]*(function([ \t])+)?([a-zA-Z0-9\._:-]+)[ \t]*\(.*/, \
         "\\3()", \
         "g" \
     )
@@ -326,44 +361,24 @@ in_exitcodes {
     # looks like function end so mark it as we need to try and pick up alias
     # in_function_end is checked at start of desc
     found_function_end = 1
-}
-
-# ALIAS, needs to be on line imediately following the closing }
-/^alias / && doing_function_chunk && found_function_end {
-    content_function_name = gensub(\
-        /^alias (.*)=.*/, \
-        "\\1()", \
-        "g" \
-    )
-    # done with chunk if we get here
-    doing_function_chunk = 0
-    # mark it to be finalized
-    finalize_function_docs = 1
-}
-
-# blank line and doing_function_chunk we show a function ended then mark it
-(/^\s*$/ || /^#\s?end$/ ) && doing_function_chunk && found_function_end {
-    # done with chunk if we get here
-    doing_function_chunk = 0
-    # mark it to be finalized
     finalize_function_docs = 1
 }
 
 # this is here as we want to finish only after blank line or alias
-{
-    if (finalize_function_docs ) {
-        if (is_internal ) {
-            is_internal = 0
-        } else {
-            doc = doc "\n" render("h_rule") "\n"
-            doc = doc "\n" render("h2", content_function_name) "\n" docblock
-        }
+finalize_function_docs {
 
-        finalize_function_docs = 0
-        content_function_name = ""
-        reset()
-        docblock = ""
+    if (is_internal ) {
+        is_internal = 0
+    } else {
+        doc = doc "\n" render("h_rule") "\n"
+        doc = doc "\n" render("h2", content_function_name) "\n" docblock
     }
+
+    finalize_function_docs = 0
+    content_function_name = ""
+    reset()
+    docblock = ""
+
 }
 
 END {
